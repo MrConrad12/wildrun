@@ -34,7 +34,7 @@ flutter:
   fonts:
     - family: Schyler
       fonts:
-        - asset: assets/fonts/Audiowide/Audiowide-Regular.ttf
+        - asset: assets/fonts/Audiowide-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
