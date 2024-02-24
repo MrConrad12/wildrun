@@ -30,9 +30,14 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/parallax/
+    - assets/images/animals/
+    - assets/images/enemies/
+    - assets/images/players/player1/
+    - assets/audio/
 
   fonts:
-    - family: Schyler
+    - family: Audiowide
       fonts:
         - asset: assets/fonts/Audiowide-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf

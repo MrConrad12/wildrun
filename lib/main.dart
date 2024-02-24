@@ -4,7 +4,15 @@ import 'package:hive/hive.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:wildrun/game/wildrun.dart';
+
+import 'widgets/hud.dart';
+import 'game/wildrun.dart';
+import 'models/settings.dart';
+import 'widgets/main_menu.dart';
+import 'models/player_data.dart';
+import 'widgets/pause_menu.dart';
+import 'widgets/settings_menu.dart';
+import 'widgets/game_over_menu.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +25,8 @@ Future<void> initHive() async {
     final dir = await getApplicationDocumentsDirectory();
     Hive.init(dir.path);
   }
-  //Hive.registerAdapter<PlayerData>(PlayerDataAdapter());
-  //Hive.registerAdapter<Settings>(SettingsAdapter());
+  Hive.registerAdapter<PlayerData>(PlayerDataAdapter());
+  Hive.registerAdapter<Settings>(SettingsAdapter());
 }
 
 class WildRunApp extends StatelessWidget {
@@ -51,16 +59,13 @@ class WildRunApp extends StatelessWidget {
           ),
 
           overlayBuilderMap: {
-            /*
             MainMenu.id: (_, game) => MainMenu(game),
             PauseMenu.id: (_, game) => PauseMenu(game),
             Hud.id: (_, game) => Hud(game),
             GameOverMenu.id: (_, game) => GameOverMenu(game),
             SettingsMenu.id: (_, game) => SettingsMenu(game),
-            */
           },
-          //initialActiveOverlays: const [MainMenu.id],
-
+          initialActiveOverlays: const [MainMenu.id],
           gameFactory: () => WildRun(
               camera:
                   CameraComponent.withFixedResolution(width: 360, height: 180)),
