@@ -48,7 +48,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     ),
     PlayerAnimationStates.attack: SpriteAnimationData.sequenced(
       amount: 8,
-      stepTime: 0.2,
+      stepTime: 0.1,
       textureSize: Vector2.all(32),
       texturePosition: Vector2(0, (8) * 32),
     ),
@@ -73,12 +73,15 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   };
   double yMax = 0.0;
   double speedY = 0.0;
+  bool hasJumped = true;
 
-  final Timer _hitTimer = Timer(1);
+  final Timer _hitTimer = Timer(0.5);
+  final Timer _attackTimer = Timer(1);
   static const double gravity = 700;
   final PlayerData playerData;
 
   bool isHit = false;
+  bool isAttack = false;
 
   Player(Image image, this.playerData)
       : super.fromFrameData(image, _animationMap);
@@ -100,6 +103,10 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
       current = PlayerAnimationStates.run;
       isHit = false;
     };
+    _attackTimer.onTick = () {
+      current = PlayerAnimationStates.run;
+      isAttack = false;
+    };
 
     super.onMount();
   }
@@ -112,11 +119,13 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
       y = yMax;
       speedY = 0.0;
       if ((current != PlayerAnimationStates.hit) &&
-          (current != PlayerAnimationStates.run)) {
+          (current != PlayerAnimationStates.run) &&
+          (current != PlayerAnimationStates.attack)) {
         current = PlayerAnimationStates.run;
       }
     }
     _hitTimer.update(dt);
+    _attackTimer.update(dt);
     super.update(dt);
   }
 
@@ -132,9 +141,19 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   void jump() {
     if (isOnGround) {
       speedY = -300;
-      current = PlayerAnimationStates.jump;
-      //AudioManager.instance.playSfx(''); // adding sfx
+      hasJumped = true;
     }
+    if (!isOnGround && hasJumped) {
+      speedY = -250;
+      hasJumped = false;
+    }
+    current = PlayerAnimationStates.jump;
+    AudioManager.instance.playSfx('jump14.wav');
+  }
+
+  void attack() {
+    current = PlayerAnimationStates.attack;
+    _attackTimer.start();
   }
 
   void hit() {
@@ -154,6 +173,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     size = Vector2.all(24);
     current = PlayerAnimationStates.run;
     isHit = false;
+    isAttack = false;
     speedY = 0.0;
   }
 }

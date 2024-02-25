@@ -30,6 +30,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/brand/
     - assets/images/parallax/
     - assets/images/animals/
     - assets/images/enemies/
@@ -40,6 +41,10 @@ flutter:
     - family: Audiowide
       fonts:
         - asset: assets/fonts/Audiowide-Regular.ttf
+    - family: Oswald
+      fonts:
+        - asset: assets/fonts/Oswald-Bold.ttf
+        
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

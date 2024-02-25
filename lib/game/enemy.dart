@@ -18,7 +18,6 @@ class Enemy extends SpriteAnimationComponent
   }
   @override
   void onMount() {
-    // size of enemy compare to player
     size *= 1;
 
     add(RectangleHitbox.relative(
@@ -34,7 +33,6 @@ class Enemy extends SpriteAnimationComponent
     position.x -= enemyData.speedX * dt;
     if (position.x < -enemyData.textureSize.x) {
       removeFromParent();
-      //change this after
       game.playerData.currentScore += 1;
     }
     super.update(dt);

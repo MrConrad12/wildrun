@@ -23,9 +23,9 @@ class Hud extends StatelessWidget {
     return ChangeNotifierProvider.value(
       value: game.playerData,
       child: Padding(
-        padding: const EdgeInsets.only(top: 10.0),
+        padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(

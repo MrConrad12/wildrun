@@ -29,12 +29,37 @@ class MainMenu extends StatelessWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 spacing: 10,
                 children: [
-                  const Text(
-                    'Wild Run',
-                    style: TextStyle(
-                      fontSize: 50,
-                      color: Colors.white,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                          tooltip: 'view info',
+                          onPressed: () {},
+                          icon: const Icon(Icons.info_outline_rounded)),
+                      IconButton(
+                          tooltip: 'view tasks',
+                          onPressed: () {},
+                          icon: const Icon(Icons.task_alt)),
+                      IconButton(
+                          tooltip: 'view cards',
+                          onPressed: () {},
+                          icon: const Icon(Icons.content_copy_outlined)),
+                      IconButton(
+                          tooltip: 'go to store',
+                          onPressed: () {},
+                          icon: const Icon(Icons.store)),
+                      IconButton(
+                          tooltip: 'go to settings',
+                          onPressed: () {
+                            game.overlays.remove(MainMenu.id);
+                            game.overlays.add(SettingsMenu.id);
+                          },
+                          icon: const Icon(Icons.settings)),
+                    ],
+                  ),
+                  Image.asset(
+                    'assets/brand/wildrun_logo.png',
+                    fit: BoxFit.contain,
                   ),
                   ElevatedButton(
                       onPressed: () {
@@ -48,17 +73,6 @@ class MainMenu extends StatelessWidget {
                           fontSize: 30,
                         ),
                       )),
-                  ElevatedButton(
-                      onPressed: () {
-                        game.overlays.remove(MainMenu.id);
-                        game.overlays.add(SettingsMenu.id);
-                      },
-                      child: const Text(
-                        'Settings',
-                        style: TextStyle(
-                          fontSize: 30,
-                        ),
-                      ))
                 ],
               ),
             ),
