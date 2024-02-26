@@ -34,6 +34,7 @@ flutter:
     - assets/images/parallax/
     - assets/images/animals/
     - assets/images/enemies/
+    - assets/images/landscape/
     - assets/images/players/player1/
     - assets/audio/
 

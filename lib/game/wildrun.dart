@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -7,14 +9,19 @@ import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/components.dart';
 
-import '/game/player.dart';
+import 'actors/player.dart';
 import '/widgets/hud.dart';
 import '/models/settings.dart';
-import '/game/audio_manager.dart';
-import '/game/enemy_manager.dart';
+import 'managers/audio_manager.dart';
+import 'managers/enemy_manager.dart';
 import '/models/player_data.dart';
 import '/widgets/pause_menu.dart';
 import '/widgets/game_over_menu.dart';
+import 'objects/ground_block.dart';
+import 'objects/platform_block.dart';
+import 'objects/animals.dart';
+import 'managers/segment_manager.dart';
+import 'actors/enemies.dart';
 
 // Game class representing the main game logic
 class WildRun extends FlameGame
@@ -35,7 +42,11 @@ class WildRun extends FlameGame
     'parallax/plx-8.png',
     'enemies/enemy.png',
     'animals/squirel.png',
+    'animals/bird.png',
+    'animals/hog.png',
     'animals/wolf.png',
+    'landscape/ground.png',
+    'landscape/platform_center.png',
   ];
 
   // Asset paths for audio files
@@ -45,10 +56,13 @@ class WildRun extends FlameGame
     'jump14.wav',
   ];
 
+  double objectSpeed = -100;
   late Player _player;
   late Settings settings;
   late PlayerData playerData;
   late EnemyManager _enemyManager;
+  late double lastBlockXPosition = 0.0;
+  late UniqueKey lastBlockKey;
 
   Vector2 get virtualSize => camera.viewport.virtualSize;
 
@@ -76,9 +90,47 @@ class WildRun extends FlameGame
       ParallaxImageData('parallax/plx-5.png'),
       ParallaxImageData('parallax/plx-6.png'),
       ParallaxImageData('parallax/plx-7.png'),
-      ParallaxImageData('parallax/plx-8.png'),
+      //ParallaxImageData('parallax/plx-8.png'),
     ], baseVelocity: Vector2(10, 0), velocityMultiplierDelta: Vector2(1.4, 0));
     camera.backdrop.add(parallaxBackground);
+    initializeElements();
+  }
+
+  void initializeElements() {
+    final segmentsToLoad = (size.x / 640).ceil();
+    segmentsToLoad.clamp(0, segments.length);
+    for (var i = 0; i <= segmentsToLoad; i++) {
+      loadGameSegments(i, (640 * i).toDouble());
+    }
+  }
+
+  void loadGameSegments(int segmentIndex, double xPositionOffset) {
+    for (final block in segments[segmentIndex]) {
+      switch (block.blockType) {
+        case GroundBlock:
+          world.add(
+            GroundBlock(
+              gridPosition: block.gridPosition,
+              xOffset: xPositionOffset,
+            ),
+          );
+          break;
+        case PlatformBlock:
+          world.add(PlatformBlock(
+              gridPosition: block.gridPosition, xOffset: xPositionOffset));
+          break;
+        case Animal:
+          world.add(
+            Animal(gridPosition: block.gridPosition, xOffset: xPositionOffset),
+          );
+          break;
+        case Enemy:
+          world.add(
+            Enemy(gridPosition: block.gridPosition, xOffset: xPositionOffset),
+          );
+          break;
+      }
+    }
   }
 
   // Method to start the gameplay

@@ -7,7 +7,7 @@ import '/widgets/hud.dart';
 import '/game/wildrun.dart';
 import '/widgets/main_menu.dart';
 import '/models/player_data.dart';
-import '/game/audio_manager.dart';
+import '../game/managers/audio_manager.dart';
 
 // This represents the game over overlay,
 // displayed with dino runs out of lives.

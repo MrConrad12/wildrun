@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '/widgets/hud.dart';
 import '/game/wildrun.dart';
 import '/widgets/main_menu.dart';
-import '/game/audio_manager.dart';
+import '../game/managers/audio_manager.dart';
 import '/models/player_data.dart';
 
 // This represents the pause menu overlay.

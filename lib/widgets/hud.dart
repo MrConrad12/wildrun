@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wildrun/game/wildrun.dart';
 
-import '/game/audio_manager.dart';
+import '../game/managers/audio_manager.dart';
 import '/models/player_data.dart';
 import '/widgets/pause_menu.dart';
 
@@ -29,6 +29,7 @@ class Hud extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Selector<PlayerData, int>(
                   selector: (_, playerData) => playerData.currentScore,

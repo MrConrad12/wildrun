@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '/game/wildrun.dart';
 import '/models/settings.dart';
 import '/widgets/main_menu.dart';
-import '/game/audio_manager.dart';
+import '../game/managers/audio_manager.dart';
 
 // This represents the settings menu overlay.
 class SettingsMenu extends StatelessWidget {
