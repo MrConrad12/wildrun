@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:wildrun/widgets/card_menu.dart';
 import '/widgets/hud.dart';
 import '/game/wildrun.dart';
 import '/widgets/settings_menu.dart';
+import '/widgets/card_menu.dart';
 
 class MainMenu extends StatelessWidget {
   static const id = "MainMenu";
@@ -42,7 +44,10 @@ class MainMenu extends StatelessWidget {
                           icon: const Icon(Icons.task_alt)),
                       IconButton(
                           tooltip: 'view cards',
-                          onPressed: () {},
+                          onPressed: () {
+                            game.overlays.remove(MainMenu.id);
+                            game.overlays.add(CardMenu.id);
+                          },
                           icon: const Icon(Icons.content_copy_outlined)),
                       IconButton(
                           tooltip: 'go to store',

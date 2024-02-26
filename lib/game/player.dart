@@ -6,6 +6,7 @@ import 'package:flame/components.dart';
 import '/game/wildrun.dart';
 import '/game/enemy.dart';
 import '/game/audio_manager.dart';
+import '/game/blowingball.dart';
 import '/models/player_data.dart';
 
 enum PlayerAnimationStates {
@@ -79,6 +80,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   final Timer _attackTimer = Timer(1);
   static const double gravity = 700;
   final PlayerData playerData;
+  late final SpawnComponent _ballSpawner;
 
   bool isHit = false;
   bool isAttack = false;
@@ -89,7 +91,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   @override
   void onMount() {
     _reset();
-
     add(
       RectangleHitbox.relative(
         Vector2(0.5, 0.7),
@@ -112,6 +113,27 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   }
 
   @override
+  Future<void> onLoad() async {
+    print("player has loaded");
+    position = game.size / 2;
+    _ballSpawner = SpawnComponent(
+      period: .5,
+      selfPositioning: true,
+      factory: (index) {
+        return GlowingBall(
+          position: position +
+              Vector2(
+                0,
+                0,
+              ),
+        );
+      },
+      autoStart: false,
+    );
+    game.add(_ballSpawner);
+  }
+
+  @override
   void update(double dt) {
     speedY += gravity * dt;
     y += speedY * dt;
@@ -131,8 +153,13 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if ((other is Enemy) && (!isHit)) {
-      hit();
+    if (other is Enemy && !isHit) {
+      if (!isAttack) {
+        hit();
+      }
+      if (isAttack) {
+        attack();
+      }
     }
     super.onCollision(intersectionPoints, other);
   }
@@ -154,6 +181,16 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   void attack() {
     current = PlayerAnimationStates.attack;
     _attackTimer.start();
+    startAttack();
+  }
+
+  void startAttack() {
+    _ballSpawner.timer.start();
+    print('attack');
+  }
+
+  void stopAttack() {
+    _ballSpawner.timer.stop();
   }
 
   void hit() {

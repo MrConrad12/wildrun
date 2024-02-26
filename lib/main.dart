@@ -14,6 +14,7 @@ import 'models/player_data.dart';
 import 'widgets/pause_menu.dart';
 import 'widgets/settings_menu.dart';
 import 'widgets/game_over_menu.dart';
+import 'widgets/card_menu.dart';
 
 // Main function to initialize the game
 Future<void> main() async {
@@ -88,6 +89,7 @@ class WildRunApp extends StatelessWidget {
             Hud.id: (_, game) => Hud(game),
             GameOverMenu.id: (_, game) => GameOverMenu(game),
             SettingsMenu.id: (_, game) => SettingsMenu(game),
+            CardMenu.id: (_, game) => CardMenu(game)
           },
           // Initial active overlays for the game
           initialActiveOverlays: const [MainMenu.id],

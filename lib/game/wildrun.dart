@@ -35,7 +35,6 @@ class WildRun extends FlameGame
     'parallax/plx-8.png',
     'enemies/enemy.png',
     'animals/squirel.png',
-    'animals/wolf.png',
   ];
 
   // Asset paths for audio files
@@ -125,6 +124,7 @@ class WildRun extends FlameGame
         _player.jump();
       }
       if (info.eventPosition.widget.x < (sizeScreen.width / 2)) {
+        _player.startAttack();
         _player.attack();
       }
     }
