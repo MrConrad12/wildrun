@@ -4,7 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-import '../managers/segment_manager.dart';
+import '../managers/elements_manager.dart';
 import '../wildrun.dart';
 
 class GroundBlock extends SpriteComponent with HasGameReference<WildRun> {
@@ -49,7 +49,7 @@ class GroundBlock extends SpriteComponent with HasGameReference<WildRun> {
     if (position.x < -size.x) {
       removeFromParent();
       if (gridPosition.x == 0) {
-        game.loadGameSegments(
+        game.elementManager.loadGameRefSegments(
           Random().nextInt(segments.length),
           game.lastBlockXPosition,
         );

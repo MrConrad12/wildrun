@@ -16,10 +16,10 @@ class Enemy extends SpriteAnimationComponent with HasGameReference<WildRun> {
   @override
   void onLoad() {
     animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('enemies.png'),
+      game.images.fromCache('animals/wolf.png'),
       SpriteAnimationData.sequenced(
-        amount: 4,
-        textureSize: Vector2.all(16),
+        amount: 2,
+        textureSize: Vector2.all(32),
         stepTime: 0.70,
       ),
     );

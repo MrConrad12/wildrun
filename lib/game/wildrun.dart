@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -13,15 +11,10 @@ import 'actors/player.dart';
 import '/widgets/hud.dart';
 import '/models/settings.dart';
 import 'managers/audio_manager.dart';
-//import 'managers/enemy_manager.dart';
+import 'managers/elements_manager.dart';
 import '/models/player_data.dart';
 import '/widgets/pause_menu.dart';
 import '/widgets/game_over_menu.dart';
-import 'objects/ground_block.dart';
-import 'objects/platform_block.dart';
-import 'objects/animals.dart';
-import 'managers/segment_manager.dart';
-import 'objects/enemies.dart';
 
 // Game class representing the main game logic
 class WildRun extends FlameGame
@@ -49,7 +42,6 @@ class WildRun extends FlameGame
     'landscape/void.png',
     'landscape/platform_center.png',
   ];
-
   // Asset paths for audio files
   static const _audioAssets = [
     '8BitPlatformerLoop.wav',
@@ -61,7 +53,8 @@ class WildRun extends FlameGame
   late Player _player;
   late Settings settings;
   late PlayerData playerData;
-  //late EnemyManager _enemyManager;
+  late ElementManager _elementManager;
+  get elementManager => _elementManager;
   late double lastBlockXPosition = 0.0;
   late UniqueKey lastBlockKey;
 
@@ -79,8 +72,6 @@ class WildRun extends FlameGame
     await AudioManager.instance.init(_audioAssets, settings);
     AudioManager.instance.startBgm('8BitPlatformerLoop.wav');
     await images.loadAll(_imageAssets);
-    initializeElements();
-
     camera.viewfinder.position = camera.viewport.virtualSize * 0.5;
 
     // Load parallax background images
@@ -91,60 +82,23 @@ class WildRun extends FlameGame
     camera.backdrop.add(parallaxBackground);
   }
 
-  void initializeElements() {
-    final segmentsToLoad = (size.x / 319).ceil();
-    segmentsToLoad.clamp(0, segments.length);
-    for (var i = 0; i <= segmentsToLoad; i++) {
-      loadGameSegments(i, (320 * i - 2).toDouble());
-    }
-  }
-
-  void loadGameSegments(int segmentIndex, double xPositionOffset) {
-    for (final block in segments[segmentIndex]) {
-      switch (block.blockType) {
-        case GroundBlock:
-          world.add(
-            GroundBlock(
-              gridPosition: block.gridPosition,
-              xOffset: xPositionOffset,
-            ),
-          );
-          break;
-        case PlatformBlock:
-          world.add(PlatformBlock(
-              gridPosition: block.gridPosition, xOffset: xPositionOffset));
-          break;
-        case Animal:
-          world.add(
-            Animal(gridPosition: block.gridPosition, xOffset: xPositionOffset),
-          );
-          break;
-        case Enemy:
-          world.add(
-            Enemy(gridPosition: block.gridPosition, xOffset: xPositionOffset),
-          );
-          break;
-        default:
-          break;
-      }
-    }
-  }
-
   // Method to start the gameplay
   void startGamePlay() {
+    _elementManager = ElementManager(gameRef: game);
+    _elementManager.initializeElements();
+
     _player =
         Player(images.fromCache('players/player1/player.png'), playerData);
-    //_enemyManager = EnemyManager();
 
     world.add(_player);
-    //world.add(_enemyManager);
+    world.add(_elementManager);
   }
 
   // Method to disconnect actors and reset game state
   void _disconnectActors() {
     _player.removeFromParent();
-    //_enemyManager.removeAllEnemies();
-    //_enemyManager.removeFromParent();
+    _elementManager.removeAllElements();
+    _elementManager.removeFromParent();
   }
 
   // Method to reset the game

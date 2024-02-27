@@ -1,11 +1,11 @@
 import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:wildrun/game/objects/animals.dart';
+import 'package:wildrun/game/objects/animal.dart';
+import 'package:wildrun/game/objects/enemy.dart';
 import 'package:wildrun/game/objects/platform_block.dart';
 
 import '/game/wildrun.dart';
-import 'enemy.dart';
 import '../managers/audio_manager.dart';
 import '/models/player_data.dart';
 
@@ -153,7 +153,9 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
       heal();
     }
     super.onCollision(intersectionPoints, other);
-    if ((other is PlatformBlock) && position.y <= other.posY - 10) {
+    if ((other is PlatformBlock) &&
+        position.y <= other.posY - 10 &&
+        position.y <= other.posY + 10) {
       touchPlatform = true;
       currentY = y;
     }
@@ -184,15 +186,14 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     isHit = true;
     AudioManager.instance.playSfx('hurt7.wav');
     current = PlayerAnimationStates.hit;
-    _effectTimer.start();
     playerData.lives -= 1;
+    _effectTimer.start();
   }
 
   // heal method for handling player heal events
   void heal() {
     isHeal = true;
     playerData.lives += 1;
-    print("heal");
     _effectTimer.start();
   }
 
