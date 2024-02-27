@@ -13,7 +13,7 @@ import 'actors/player.dart';
 import '/widgets/hud.dart';
 import '/models/settings.dart';
 import 'managers/audio_manager.dart';
-import 'managers/enemy_manager.dart';
+//import 'managers/enemy_manager.dart';
 import '/models/player_data.dart';
 import '/widgets/pause_menu.dart';
 import '/widgets/game_over_menu.dart';
@@ -21,7 +21,7 @@ import 'objects/ground_block.dart';
 import 'objects/platform_block.dart';
 import 'objects/animals.dart';
 import 'managers/segment_manager.dart';
-import 'actors/enemies.dart';
+import 'objects/enemies.dart';
 
 // Game class representing the main game logic
 class WildRun extends FlameGame
@@ -46,6 +46,7 @@ class WildRun extends FlameGame
     'animals/hog.png',
     'animals/wolf.png',
     'landscape/ground.png',
+    'landscape/void.png',
     'landscape/platform_center.png',
   ];
 
@@ -56,11 +57,11 @@ class WildRun extends FlameGame
     'jump14.wav',
   ];
 
-  double objectSpeed = -100;
+  double objectSpeed = 100;
   late Player _player;
   late Settings settings;
   late PlayerData playerData;
-  late EnemyManager _enemyManager;
+  //late EnemyManager _enemyManager;
   late double lastBlockXPosition = 0.0;
   late UniqueKey lastBlockKey;
 
@@ -83,15 +84,10 @@ class WildRun extends FlameGame
     camera.viewfinder.position = camera.viewport.virtualSize * 0.5;
 
     // Load parallax background images
-    final parallaxBackground = await loadParallaxComponent([
-      ParallaxImageData('parallax/plx-1.png'),
-      ParallaxImageData('parallax/plx-2.png'),
-      ParallaxImageData('parallax/plx-3.png'),
-      ParallaxImageData('parallax/plx-4.png'),
-      ParallaxImageData('parallax/plx-5.png'),
-      ParallaxImageData('parallax/plx-6.png'),
-      ParallaxImageData('parallax/plx-7.png'),
-    ], baseVelocity: Vector2(10, 0), velocityMultiplierDelta: Vector2(1.4, 0));
+    final parallaxBackground = await loadParallaxComponent(
+        [for (var i = 1; i <= 8; i++) ParallaxImageData('parallax/plx-$i.png')],
+        baseVelocity: Vector2(10, 0),
+        velocityMultiplierDelta: Vector2(1.38, 0));
     camera.backdrop.add(parallaxBackground);
   }
 
@@ -138,18 +134,17 @@ class WildRun extends FlameGame
   void startGamePlay() {
     _player =
         Player(images.fromCache('players/player1/player.png'), playerData);
-    _enemyManager = EnemyManager();
+    //_enemyManager = EnemyManager();
 
     world.add(_player);
-    world.add(_enemyManager);
-    initializeElements();
+    //world.add(_enemyManager);
   }
 
   // Method to disconnect actors and reset game state
   void _disconnectActors() {
     _player.removeFromParent();
-    _enemyManager.removeAllEnemies();
-    _enemyManager.removeFromParent();
+    //_enemyManager.removeAllEnemies();
+    //_enemyManager.removeFromParent();
   }
 
   // Method to reset the game
@@ -168,6 +163,7 @@ class WildRun extends FlameGame
       pauseEngine();
       AudioManager.instance.pauseBgm();
     }
+    game.playerData.currentScore += ((objectSpeed * dt)).toInt();
     super.update(dt);
   }
 

@@ -1,6 +1,5 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-
 import '/game/wildrun.dart';
 import '/models/enemy_data.dart';
 
@@ -33,7 +32,7 @@ class Enemy extends SpriteAnimationComponent
     position.x -= enemyData.speedX * dt;
     if (position.x < -enemyData.textureSize.x) {
       removeFromParent();
-      game.playerData.currentScore += 1;
+      //game.playerData.currentScore += 1;
     }
     super.update(dt);
   }

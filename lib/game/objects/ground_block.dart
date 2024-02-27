@@ -10,6 +10,7 @@ import '../wildrun.dart';
 class GroundBlock extends SpriteComponent with HasGameReference<WildRun> {
   final Vector2 gridPosition;
   double xOffset;
+  String urlImage;
 
   final UniqueKey _blockKey = UniqueKey();
   final Vector2 velocity = Vector2.zero();
@@ -17,11 +18,12 @@ class GroundBlock extends SpriteComponent with HasGameReference<WildRun> {
   GroundBlock({
     required this.gridPosition,
     required this.xOffset,
+    this.urlImage = 'landscape/void.png',
   }) : super(size: Vector2.all(32), anchor: Anchor.bottomLeft);
 
   @override
   void onLoad() {
-    final groundImage = game.images.fromCache('landscape/ground.png');
+    final groundImage = game.images.fromCache(urlImage);
     sprite = Sprite(groundImage);
     position = Vector2(
       gridPosition.x * size.x + xOffset,
@@ -36,7 +38,7 @@ class GroundBlock extends SpriteComponent with HasGameReference<WildRun> {
 
   @override
   void update(double dt) {
-    velocity.x = game.objectSpeed;
+    velocity.x = -game.objectSpeed;
     position += velocity * dt;
 
     if (gridPosition.x == 9) {

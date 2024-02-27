@@ -45,7 +45,7 @@ class Animal extends SpriteAnimationComponent with HasGameReference<WildRun> {
 
   @override
   void update(double dt) {
-    velocity.x = game.objectSpeed;
+    velocity.x = -game.objectSpeed;
     position += velocity * dt;
     if (position.x < -size.x) removeFromParent();
     super.update(dt);
