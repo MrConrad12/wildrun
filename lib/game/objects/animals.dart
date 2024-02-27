@@ -13,7 +13,7 @@ class Animal extends SpriteAnimationComponent with HasGameReference<WildRun> {
   Animal({
     required this.gridPosition,
     required this.xOffset,
-  }) : super(size: Vector2.all(16), anchor: Anchor.center);
+  }) : super(size: Vector2.all(14), anchor: Anchor.center);
 
   @override
   void onLoad() {

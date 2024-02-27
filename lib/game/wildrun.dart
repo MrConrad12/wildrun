@@ -78,6 +78,7 @@ class WildRun extends FlameGame
     await AudioManager.instance.init(_audioAssets, settings);
     AudioManager.instance.startBgm('8BitPlatformerLoop.wav');
     await images.loadAll(_imageAssets);
+    initializeElements();
 
     camera.viewfinder.position = camera.viewport.virtualSize * 0.5;
 
@@ -90,17 +91,15 @@ class WildRun extends FlameGame
       ParallaxImageData('parallax/plx-5.png'),
       ParallaxImageData('parallax/plx-6.png'),
       ParallaxImageData('parallax/plx-7.png'),
-      //ParallaxImageData('parallax/plx-8.png'),
     ], baseVelocity: Vector2(10, 0), velocityMultiplierDelta: Vector2(1.4, 0));
     camera.backdrop.add(parallaxBackground);
-    initializeElements();
   }
 
   void initializeElements() {
-    final segmentsToLoad = (size.x / 640).ceil();
+    final segmentsToLoad = (size.x / 319).ceil();
     segmentsToLoad.clamp(0, segments.length);
     for (var i = 0; i <= segmentsToLoad; i++) {
-      loadGameSegments(i, (640 * i).toDouble());
+      loadGameSegments(i, (320 * i - 2).toDouble());
     }
   }
 
@@ -129,6 +128,8 @@ class WildRun extends FlameGame
             Enemy(gridPosition: block.gridPosition, xOffset: xPositionOffset),
           );
           break;
+        default:
+          break;
       }
     }
   }
@@ -141,6 +142,7 @@ class WildRun extends FlameGame
 
     world.add(_player);
     world.add(_enemyManager);
+    initializeElements();
   }
 
   // Method to disconnect actors and reset game state

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:wildrun/game/objects/platform_block.dart';
@@ -86,6 +85,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
 
   bool isHit = false;
   bool isAttack = false;
+  final Vector2 fromAbove = Vector2(0, -1);
 
   Player(Image image, this.playerData)
       : super.fromFrameData(image, _animationMap);
