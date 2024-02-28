@@ -6,39 +6,34 @@ import '../wildrun.dart';
 class Decoration extends SpriteComponent with HasGameReference<WildRun> {
   final TypeBlock typeBlock;
   final String urlImg;
-  late Vector2 _gridPosition;
-  late double _xOffset;
+  late Vector2 gridPosition;
+  late double xOffset;
   final Vector2 velocity = Vector2.zero();
   final Vector2 sizeElement;
+  get posY => position.y;
+  get posX => position.x;
 
   Decoration({
     required this.typeBlock,
     required this.urlImg,
+    required this.gridPosition,
+    required this.xOffset,
     required this.sizeElement,
   }) : super(size: sizeElement, anchor: Anchor.center);
 
-  void setPos(Vector2 gridPosition, double xOffset) {
-    print('hello');
-    _gridPosition = gridPosition;
-    _xOffset = xOffset;
-  }
-
   @override
   void onLoad() {
-    debugMode = true;
     final platformImage = game.images.fromCache(urlImg);
     sprite = Sprite(platformImage);
     position = Vector2(
-      (_gridPosition.x * size.x) + _xOffset,
-      game.size.y - (_gridPosition.y * size.y),
+      (gridPosition.x * size.x) + xOffset,
+      game.size.y - (gridPosition.y * size.y),
     );
     add(RectangleHitbox(collisionType: CollisionType.passive));
   }
 
   @override
   void update(double dt) {
-    debugMode = true;
-
     velocity.x = -game.objectSpeed;
     position += velocity * dt;
     if (position.x < -size.x) removeFromParent();

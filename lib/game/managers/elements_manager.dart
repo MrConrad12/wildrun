@@ -1,9 +1,8 @@
 import 'package:flame/components.dart';
-import 'package:wildrun/game/objects/entity.dart';
-import '../../models/element_data.dart';
+
+import '../objects/entity.dart';
 import '../objects/decoration.dart';
 import '../objects/ground_block.dart';
-
 import '../wildrun.dart';
 import 'mapping.dart';
 
@@ -22,7 +21,6 @@ class ElementManager extends Component with HasGameReference<WildRun> {
   }
 
   void loadGameRefSegments(int segmentIndex, double xPositionOffset) {
-    dynamic element;
     for (final block in segments[segmentIndex]) {
       switch (block.blockType) {
         case TypeBlock.ground:
@@ -34,25 +32,41 @@ class ElementManager extends Component with HasGameReference<WildRun> {
           );
           break;
         case TypeBlock.platform:
-          element = listElement[TypeBlock.platform];
-          element?.setPos(block.gridPosition, xPositionOffset);
-          gameRef.world.add(element!);
-          print("rere");
+          gameRef.world.add(
+            Decoration(
+              typeBlock: TypeBlock.platform,
+              urlImg: 'landscape/platform_center.png',
+              sizeElement: Vector2(30, 16),
+              gridPosition: block.gridPosition,
+              xOffset: xPositionOffset,
+            ),
+          );
           break;
-        case TypeBlock.enemy:
-          element = listElement[TypeBlock.enemy];
-          element?.setPos(block.gridPosition, xPositionOffset);
-          gameRef.world.add(element!);
+        case TypeBlock.wolf:
+          gameRef.world.add(
+            Entity(
+                typeBlock: TypeBlock.wolf,
+                urlImg: 'animals/wolf.png',
+                sizeElement: Vector2.all(14),
+                gridPosition: block.gridPosition,
+                xOffset: xPositionOffset,
+                spriteSize: Vector2.all(16),
+                spriteTime: .5,
+                nbFrame: 4),
+          );
           break;
-        case TypeBlock.animal:
-          element = listElement[TypeBlock.animal];
-          element?.setPos(block.gridPosition, xPositionOffset);
-          gameRef.world.add(element!);
-          break;
-        case TypeBlock.coin:
-          element = listElement[TypeBlock.coin];
-          element?.setPos(block.gridPosition, xPositionOffset);
-          gameRef.world.add(element!);
+        case TypeBlock.bird:
+          gameRef.world.add(
+            Entity(
+                typeBlock: TypeBlock.bird,
+                urlImg: 'animals/bird.png',
+                sizeElement: Vector2.all(16),
+                gridPosition: block.gridPosition,
+                xOffset: xPositionOffset,
+                spriteSize: Vector2.all(16),
+                spriteTime: .2,
+                nbFrame: 4),
+          );
           break;
         default:
           break;

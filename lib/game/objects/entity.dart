@@ -7,12 +7,13 @@ import '../wildrun.dart';
 class Entity extends SpriteAnimationComponent with HasGameReference<WildRun> {
   final TypeBlock typeBlock;
   final String urlImg;
-  late Vector2 _gridPosition;
-  late double _xOffset;
+  late Vector2 gridPosition;
+  late double xOffset;
   final Vector2 velocity = Vector2.zero();
   final Vector2 sizeElement;
   final Vector2 spriteSize;
   final int nbFrame;
+  final double spriteTime;
 
   Entity({
     required this.typeBlock,
@@ -20,13 +21,10 @@ class Entity extends SpriteAnimationComponent with HasGameReference<WildRun> {
     required this.sizeElement,
     required this.spriteSize,
     required this.nbFrame,
+    required this.spriteTime,
+    required this.gridPosition,
+    required this.xOffset,
   }) : super(size: sizeElement, anchor: Anchor.center);
-
-  void setPos(Vector2 gridPosition, double xOffset) {
-    print('hey');
-    _gridPosition = gridPosition;
-    _xOffset = xOffset;
-  }
 
   @override
   void onLoad() {
@@ -35,14 +33,15 @@ class Entity extends SpriteAnimationComponent with HasGameReference<WildRun> {
       SpriteAnimationData.sequenced(
         amount: nbFrame,
         textureSize: spriteSize,
-        stepTime: 0.70,
+        stepTime: spriteTime,
       ),
     );
     position = Vector2(
-      (_gridPosition.x * size.x) + _xOffset,
-      game.size.y - (_gridPosition.y * size.y * 2),
+      (gridPosition.x * size.x) + xOffset,
+      game.size.y - (gridPosition.y * size.y * 2),
     );
     add(RectangleHitbox(collisionType: CollisionType.passive));
+    flipHorizontally();
 
     if (typeBlock == TypeBlock.fruit) {
       add(
@@ -60,8 +59,6 @@ class Entity extends SpriteAnimationComponent with HasGameReference<WildRun> {
 
   @override
   void update(double dt) {
-    debugMode = true;
-
     velocity.x = -game.objectSpeed;
     position += velocity * dt;
     if (position.x < -size.x) removeFromParent();

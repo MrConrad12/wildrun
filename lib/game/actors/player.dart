@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:wildrun/game/objects/animal.dart';
-import 'package:wildrun/game/objects/enemy.dart';
-import 'package:wildrun/game/objects/platform_block.dart';
+import 'package:wildrun/game/managers/mapping.dart';
+import 'package:wildrun/game/objects/decoration.dart';
+import 'package:wildrun/game/objects/entity.dart';
 
 import '/game/wildrun.dart';
 import '../managers/audio_manager.dart';
@@ -127,8 +127,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   // update method for updating player properties
   @override
   void update(double dt) {
-    debugMode = true;
-    debugColor = const Color.fromARGB(255, 0, 0, 0);
     speedY += gravity * dt;
     y += speedY * dt;
     if (isOnGround || touchPlatform) {
@@ -149,13 +147,14 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   // onCollision method for handling collisions with other components
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if ((other is Enemy) && (!isHit)) {
+    if ((other is Entity) && (other.typeBlock == TypeBlock.wolf) && (!isHit)) {
       hit();
     }
-    if ((other is Animal) && (!isHeal)) {
+    if ((other is Entity) && (other.typeBlock == TypeBlock.bird) && (!isHeal)) {
       heal();
     }
-    if ((other is PlatformBlock) &&
+    if ((other is Decoration) &&
+        (other.typeBlock == TypeBlock.platform) &&
         position.y <= other.posY - 10 &&
         position.y <= other.posY + 10) {
       touchPlatform = true;
