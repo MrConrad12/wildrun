@@ -59,7 +59,7 @@ class ElementManager extends Component with HasGameReference<WildRun> {
   void loadGameRefSegments(int segmentIndex, double xPositionOffset) {
     for (final block in segments[segmentIndex]) {
       switch (block.blockType) {
-        case GroundBlock:
+        case const (GroundBlock):
           gameRef.world.add(
             GroundBlock(
               gridPosition: block.gridPosition,
@@ -67,15 +67,15 @@ class ElementManager extends Component with HasGameReference<WildRun> {
             ),
           );
           break;
-        case PlatformBlock:
+        case const (PlatformBlock):
           gameRef.world.add(PlatformBlock(
               gridPosition: block.gridPosition, xOffset: xPositionOffset));
           break;
-        case Enemy:
+        case const (Enemy):
           gameRef.world.add(PlatformBlock(
               gridPosition: block.gridPosition, xOffset: xPositionOffset));
           break;
-        case Animal:
+        case const (Animal):
           gameRef.world.add(
             Animal(gridPosition: block.gridPosition, xOffset: xPositionOffset),
           );

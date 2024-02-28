@@ -127,6 +127,7 @@ class WildRun extends FlameGame
     if (overlays.isActive(Hud.id)) {
       if (info.eventPosition.widget.x >= (sizeScreen.width / 2)) {
         _player.jump();
+        _player.jumping = true;
       }
       if (info.eventPosition.widget.x < (sizeScreen.width / 2)) {
         _player.attack();

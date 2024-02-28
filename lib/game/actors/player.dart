@@ -84,6 +84,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   // Flags for jump-related actions
   bool hasJumped = false;
   bool touchPlatform = false;
+  bool jumping = false;
 
   // Flag for checking if the player is on the ground
   bool get isOnGround => (y >= yMax);
