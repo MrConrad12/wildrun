@@ -20,7 +20,6 @@ final segment1 = [
   for (double i = 0; i <= 9; i++) Element(Vector2(i, 0), GroundBlock),
   Element(Vector2(0, 4), PlatformBlock),
   Element(Vector2(0, 4), PlatformBlock),
-  Element(Vector2(5, 1), Enemy),
   Element(Vector2(5, 4), PlatformBlock),
   Element(Vector2(1, 1), Animal),
 ];
@@ -29,7 +28,6 @@ final segment2 = [
   for (double i = 0; i <= 9; i++) Element(Vector2(i, 0), GroundBlock),
   Element(Vector2(0, 4), PlatformBlock),
   Element(Vector2(5, 4), PlatformBlock),
-  Element(Vector2(5, 1), Enemy),
   Element(Vector2(1, 1), Animal),
 ];
 
@@ -38,7 +36,6 @@ final segment3 = [
   Element(Vector2(3, 3), PlatformBlock),
   Element(Vector2(4, 3), PlatformBlock),
   Element(Vector2(5, 3), PlatformBlock),
-  Element(Vector2(5, 1), Enemy),
   Element(Vector2(3, 1), Animal),
 ];
 

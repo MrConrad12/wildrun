@@ -1,25 +1,24 @@
 import 'package:flame/components.dart';
-import 'wildrun.dart';
+import '../wildrun.dart';
 
 class CardGame {
   final String name;
   final String desc;
   final Map<TypeTask, int> conditions;
   final String urlImage;
-  final player;
   CardGame(
-      {this.player,
-      required this.urlImage,
+      {required this.urlImage,
       required this.name,
       required this.desc,
       required this.conditions});
 
-  get complete {
+  bool get complete {
     bool completed = true;
     conditions.forEach((key, value) {
+      /*
       if (player.data.key < value) {
         completed = false;
-      }
+      }*/
     });
     return completed;
   }
@@ -48,11 +47,11 @@ class CardManager extends Component with HasGameReference<WildRun> {
           TypeTask.enemy: 5,
         }),
     CardGame(
-        name: "Echecs",
+        name: "Coureur de la nature",
         desc: "Some description",
         urlImage: '',
         conditions: {
-          TypeTask.run: 1000,
+          TypeTask.run: 100000,
           TypeTask.animal: 600,
           TypeTask.plant: 500,
           TypeTask.waste: 0,

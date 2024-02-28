@@ -36,7 +36,7 @@ class WildRun extends FlameGame
     'enemies/enemy.png',
     'animals/squirel.png',
     'animals/bird.png',
-    'animals/hog.png',
+    'animals/squirel.png',
     'animals/wolf.png',
     'landscape/ground.png',
     'landscape/void.png',

@@ -91,7 +91,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
 
   // Timer for various effects
   final Timer _effectTimer = Timer(.5);
-  static const double gravity = 700;
+  static const double gravity = 710;
   final PlayerData playerData;
 
   // Flags for hit, heal, and attack states
@@ -153,13 +153,14 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     if ((other is Animal) && (!isHeal)) {
       heal();
     }
-    super.onCollision(intersectionPoints, other);
     if ((other is PlatformBlock) &&
         position.y <= other.posY - 10 &&
         position.y <= other.posY + 10) {
       touchPlatform = true;
       currentY = y;
     }
+
+    super.onCollision(intersectionPoints, other);
   }
 
   // jump method for making the player jump

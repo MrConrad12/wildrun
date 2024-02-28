@@ -1,0 +1,53 @@
+[33mcommit 078b25cea47325809c05181b29c108b2b681291b[m[33m ([m[1;36mHEAD[m[33m)[m
+Author: ranto <jranto003@gmail.com>
+Date:   Wed Feb 28 09:44:06 2024 +0300
+
+    data for cards and tasks
+
+[33mcommit 7204a70f4d659cb2941f2ffcd4489b96cfa1b5c2[m
+Author: ranto <jranto003@gmail.com>
+Date:   Tue Feb 27 21:34:51 2024 +0300
+
+    reorganize code and file
+
+[33mcommit 0536008897d4ee9b619504cbb0b54a6025ed2ccc[m
+Author: ranto <jranto003@gmail.com>
+Date:   Tue Feb 27 17:19:57 2024 +0300
+
+    checkpoin before first cleaning code
+
+[33mcommit f571cde5e48d5cb290fea52fa3f1d8cd0d5f2ff2[m[33m ([m[1;31morigin/platform[m[33m, [m[1;32mplatform[m[33m)[m
+Author: ranto <jranto003@gmail.com>
+Date:   Tue Feb 27 09:23:37 2024 +0300
+
+    correct size of platform
+
+[33mcommit d6c31645e2f05c9b47984d13a58168d666a12a09[m
+Author: ranto <jranto003@gmail.com>
+Date:   Mon Feb 26 22:47:38 2024 +0300
+
+    add others compenents in game
+
+[33mcommit 4674003ed483c388db05d316b2fdb6b4d386c2c3[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/list[m[33m, [m[1;32mmain[m[33m, [m[1;32mlist[m[33m)[m
+Author: ranto <jranto003@gmail.com>
+Date:   Sun Feb 25 22:13:59 2024 +0300
+
+    change theme and add logo. Add attack to player
+
+[33mcommit 1536f5ae52ee7cf6a07012ef5dcc8a4a378dbda9[m
+Author: ranto <jranto003@gmail.com>
+Date:   Sat Feb 24 23:21:38 2024 +0300
+
+    add all general components and assets
+
+[33mcommit e487ea8e0865575d6d4162db0ac82ec15a1e1317[m
+Author: ranto <jranto003@gmail.com>
+Date:   Fri Feb 23 22:55:33 2024 +0300
+
+    add assets and begin code in player
+
+[33mcommit b662a0fb682d1cb727e3e7090d6f02129ae49cc6[m
+Author: ranto <jranto003@gmail.com>
+Date:   Fri Feb 23 19:50:29 2024 +0300
+
+    setup project

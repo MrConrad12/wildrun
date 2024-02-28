@@ -18,7 +18,7 @@ class Animal extends SpriteAnimationComponent with HasGameReference<WildRun> {
   @override
   void onLoad() {
     animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('animals/wolf.png'),
+      game.images.fromCache('animals/squirel.png'),
       SpriteAnimationData.sequenced(
         amount: 4,
         textureSize: Vector2.all(16),
