@@ -1,19 +1,26 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-
+import 'package:wildrun/game/managers/mapping.dart';
 import '../wildrun.dart';
 
-class PlatformBlock extends SpriteComponent with HasGameReference<WildRun> {
+class Decoration extends SpriteComponent with HasGameReference<WildRun> {
+  final TypeBlock typeBlock;
+  final String urlImg;
+  late Vector2 _gridPosition;
+  late double _xOffset;
   final Vector2 velocity = Vector2.zero();
-  final Vector2 gridPosition;
-  double xOffset;
-  get posY => position.y;
-  get posX => position.x;
+  final Vector2 sizeElement;
 
-  PlatformBlock({
-    required this.gridPosition,
-    required this.xOffset,
-  }) : super(size: Vector2(30, 16), anchor: Anchor.bottomLeft);
+  Decoration({
+    required this.typeBlock,
+    required this.urlImg,
+    required this.sizeElement,
+  }) : super(size: sizeElement, anchor: Anchor.center);
+
+  void setPos(Vector2 gridPosition, double xOffset) {
+    _gridPosition = gridPosition;
+    _xOffset = xOffset;
+  }
 
   @override
   void onLoad() {
@@ -22,8 +29,8 @@ class PlatformBlock extends SpriteComponent with HasGameReference<WildRun> {
         game.images.fromCache('landscape/platform_center.png');
     sprite = Sprite(platformImage);
     position = Vector2(
-      (gridPosition.x * size.x) + xOffset,
-      game.size.y - (gridPosition.y * size.y),
+      (_gridPosition.x * size.x) + _xOffset,
+      game.size.y - (_gridPosition.y * size.y),
     );
     add(RectangleHitbox(collisionType: CollisionType.passive));
   }
@@ -31,6 +38,7 @@ class PlatformBlock extends SpriteComponent with HasGameReference<WildRun> {
   @override
   void update(double dt) {
     debugMode = true;
+
     velocity.x = -game.objectSpeed;
     position += velocity * dt;
     if (position.x < -size.x) removeFromParent();

@@ -1,43 +1,11 @@
 import 'package:flame/components.dart';
+import 'package:wildrun/game/objects/entity.dart';
+import '../../models/element_data.dart';
+import '../objects/decoration.dart';
 import '../objects/ground_block.dart';
-import '../objects/platform_block.dart';
-import '../objects/animal.dart';
-import '../objects/enemy.dart';
+
 import '../wildrun.dart';
-
-class Element {
-  final Vector2 gridPosition;
-  final Type blockType;
-  Element(this.gridPosition, this.blockType);
-}
-
-final segments = [segment0, segment3, segment1, segment2];
-final segment0 = [
-  for (double i = 0; i <= 9; i++) Element(Vector2(i, 0), GroundBlock),
-];
-
-final segment1 = [
-  for (double i = 0; i <= 9; i++) Element(Vector2(i, 0), GroundBlock),
-  Element(Vector2(0, 4), PlatformBlock),
-  Element(Vector2(0, 4), PlatformBlock),
-  Element(Vector2(5, 4), PlatformBlock),
-  Element(Vector2(1, 1), Animal),
-];
-
-final segment2 = [
-  for (double i = 0; i <= 9; i++) Element(Vector2(i, 0), GroundBlock),
-  Element(Vector2(0, 4), PlatformBlock),
-  Element(Vector2(5, 4), PlatformBlock),
-  Element(Vector2(1, 1), Animal),
-];
-
-final segment3 = [
-  for (double i = 0; i <= 9; i++) Element(Vector2(i, 0), GroundBlock),
-  Element(Vector2(3, 3), PlatformBlock),
-  Element(Vector2(4, 3), PlatformBlock),
-  Element(Vector2(5, 3), PlatformBlock),
-  Element(Vector2(3, 1), Animal),
-];
+import 'mapping.dart';
 
 class ElementManager extends Component with HasGameReference<WildRun> {
   WildRun gameRef;
@@ -54,9 +22,10 @@ class ElementManager extends Component with HasGameReference<WildRun> {
   }
 
   void loadGameRefSegments(int segmentIndex, double xPositionOffset) {
+    dynamic element;
     for (final block in segments[segmentIndex]) {
       switch (block.blockType) {
-        case const (GroundBlock):
+        case TypeBlock.ground:
           gameRef.world.add(
             GroundBlock(
               gridPosition: block.gridPosition,
@@ -64,18 +33,26 @@ class ElementManager extends Component with HasGameReference<WildRun> {
             ),
           );
           break;
-        case const (PlatformBlock):
-          gameRef.world.add(PlatformBlock(
-              gridPosition: block.gridPosition, xOffset: xPositionOffset));
+        case TypeBlock.platform:
+          element = listElement[TypeBlock.platform];
+          element?.setPos(block.gridPosition, xPositionOffset);
+          gameRef.world.add(element!);
+          print("rere");
           break;
-        case const (Enemy):
-          gameRef.world.add(PlatformBlock(
-              gridPosition: block.gridPosition, xOffset: xPositionOffset));
+        case TypeBlock.enemy:
+          element = listElement[TypeBlock.enemy];
+          element?.setPos(block.gridPosition, xPositionOffset);
+          gameRef.world.add(element!);
           break;
-        case const (Animal):
-          gameRef.world.add(
-            Animal(gridPosition: block.gridPosition, xOffset: xPositionOffset),
-          );
+        case TypeBlock.animal:
+          element = listElement[TypeBlock.animal];
+          element?.setPos(block.gridPosition, xPositionOffset);
+          gameRef.world.add(element!);
+          break;
+        case TypeBlock.coin:
+          element = listElement[TypeBlock.coin];
+          element?.setPos(block.gridPosition, xPositionOffset);
+          gameRef.world.add(element!);
           break;
         default:
           break;
@@ -85,10 +62,8 @@ class ElementManager extends Component with HasGameReference<WildRun> {
 
   void removeAllElements() {
     List allElements = [
-      ...gameRef.world.children.whereType<Animal>(),
-      ...gameRef.world.children.whereType<Enemy>(),
-      ...gameRef.world.children.whereType<GroundBlock>(),
-      ...gameRef.world.children.whereType<PlatformBlock>(),
+      ...gameRef.world.children.whereType<Entity>(),
+      ...gameRef.world.children.whereType<Decoration>(),
     ];
     for (var element in allElements) {
       element.removeFromParent();

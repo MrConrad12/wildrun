@@ -4,7 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-import '../managers/elements_manager.dart';
+import '../managers/mapping.dart';
 import '../wildrun.dart';
 
 class GroundBlock extends SpriteComponent with HasGameReference<WildRun> {
@@ -40,7 +40,7 @@ class GroundBlock extends SpriteComponent with HasGameReference<WildRun> {
   void update(double dt) {
     velocity.x = -game.objectSpeed;
     position += velocity * dt;
-
+    debugMode = true;
     if (gridPosition.x == 9) {
       if (game.lastBlockKey == _blockKey) {
         game.lastBlockXPosition = position.x + size.x - 10;

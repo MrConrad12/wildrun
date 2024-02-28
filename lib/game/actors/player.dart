@@ -127,6 +127,8 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   // update method for updating player properties
   @override
   void update(double dt) {
+    debugMode = true;
+    debugColor = const Color.fromARGB(255, 0, 0, 0);
     speedY += gravity * dt;
     y += speedY * dt;
     if (isOnGround || touchPlatform) {
