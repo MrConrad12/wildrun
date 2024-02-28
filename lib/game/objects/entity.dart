@@ -23,6 +23,7 @@ class Entity extends SpriteAnimationComponent with HasGameReference<WildRun> {
   }) : super(size: sizeElement, anchor: Anchor.center);
 
   void setPos(Vector2 gridPosition, double xOffset) {
+    print('hey');
     _gridPosition = gridPosition;
     _xOffset = xOffset;
   }

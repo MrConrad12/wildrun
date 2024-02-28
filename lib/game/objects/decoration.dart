@@ -18,6 +18,7 @@ class Decoration extends SpriteComponent with HasGameReference<WildRun> {
   }) : super(size: sizeElement, anchor: Anchor.center);
 
   void setPos(Vector2 gridPosition, double xOffset) {
+    print('hello');
     _gridPosition = gridPosition;
     _xOffset = xOffset;
   }
@@ -25,8 +26,7 @@ class Decoration extends SpriteComponent with HasGameReference<WildRun> {
   @override
   void onLoad() {
     debugMode = true;
-    final platformImage =
-        game.images.fromCache('landscape/platform_center.png');
+    final platformImage = game.images.fromCache(urlImg);
     sprite = Sprite(platformImage);
     position = Vector2(
       (_gridPosition.x * size.x) + _xOffset,
