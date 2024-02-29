@@ -36,6 +36,7 @@ flutter:
     - assets/images/enemies/
     - assets/images/landscape/
     - assets/images/items/
+    - assets/images/effects/
     - assets/images/players/player1/
     - assets/audio/
 

@@ -38,7 +38,7 @@ class ElementManager extends Component with HasGameReference<WildRun> {
               urlImg: 'landscape/platform_center.png',
               sizeElement: Vector2(32, 12),
               gridPosition: block.gridPosition,
-              xOffset: xPositionOffset - 32,
+              xOffset: xPositionOffset,
             ),
           );
           break;
@@ -79,6 +79,45 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 spriteSize: Vector2.all(32),
                 spriteTime: .2,
                 nbFrame: 17),
+          );
+          break;
+        case TypeBlock.waste:
+          gameRef.world.add(
+            Entity(
+                typeBlock: TypeBlock.waste,
+                urlImg: 'landscape/waste.png',
+                sizeElement: Vector2(32, 26),
+                gridPosition: block.gridPosition,
+                xOffset: xPositionOffset,
+                spriteSize: Vector2(64, 54),
+                spriteTime: .2,
+                nbFrame: 1),
+          );
+          break;
+        case TypeBlock.enemyCO2:
+          gameRef.world.add(
+            Entity(
+                typeBlock: TypeBlock.enemyCO2,
+                urlImg: 'enemies/CO2.png',
+                sizeElement: Vector2(32, 21),
+                gridPosition: block.gridPosition,
+                xOffset: xPositionOffset,
+                spriteSize: Vector2(44, 30),
+                spriteTime: .5,
+                nbFrame: 10),
+          );
+          break;
+        case TypeBlock.enemyRadioactive:
+          gameRef.world.add(
+            Entity(
+                typeBlock: TypeBlock.enemyRadioactive,
+                urlImg: 'enemies/radioactivity.png',
+                sizeElement: Vector2(32, 21),
+                gridPosition: block.gridPosition,
+                xOffset: xPositionOffset,
+                spriteSize: Vector2(44, 30),
+                spriteTime: .5,
+                nbFrame: 10),
           );
           break;
         default:

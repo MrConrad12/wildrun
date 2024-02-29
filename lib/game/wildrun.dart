@@ -39,6 +39,8 @@ class WildRun extends FlameGame
     'animals/bird.png',
     'animals/squirel.png',
     'animals/wolf.png',
+    'effects/glowingball.png',
+    'landscape/waste.png',
     'landscape/ground.png',
     'landscape/void.png',
     'landscape/platform_center.png',
@@ -50,7 +52,7 @@ class WildRun extends FlameGame
     'jump14.wav',
   ];
 
-  double objectSpeed = 81;
+  double objectSpeed = 81.5;
   late Player _player;
   late Settings settings;
   late PlayerData playerData;
@@ -59,19 +61,25 @@ class WildRun extends FlameGame
   late double lastBlockXPosition = 0.0;
   late UniqueKey lastBlockKey;
 
+  Player get player => _player;
   Vector2 get virtualSize => camera.viewport.virtualSize;
 
   // Method called when the game is loaded
   @override
   Future<void> onLoad() async {
+    // configure device size and orientation
     await Flame.device.fullScreen();
     await Flame.device.setLandscape();
 
+    // load data
     playerData = await _readPlayerData();
     settings = await _readSettings();
 
+    // load song
     await AudioManager.instance.init(_audioAssets, settings);
     AudioManager.instance.startBgm('8BitPlatformerLoop.wav');
+
+    // load images and configure camera
     await images.loadAll(_imageAssets);
     camera.viewfinder.position = camera.viewport.virtualSize * 0.5;
 
@@ -106,6 +114,7 @@ class WildRun extends FlameGame
     _disconnectActors();
     playerData.currentScore = 0;
     playerData.lives = 5;
+    playerData.attack = 5;
   }
 
   // Method called on every game update
@@ -125,10 +134,12 @@ class WildRun extends FlameGame
   @override
   void onTapDown(TapDownInfo info) {
     if (overlays.isActive(Hud.id)) {
+      // jump if tap on right of the screen
       if (info.eventPosition.widget.x >= (sizeScreen.width / 2) &&
           !_player.isFly) {
         _player.jump();
       }
+      // attack if tap on left of the screen
       if (info.eventPosition.widget.x < (sizeScreen.width / 2)) {
         _player.attack();
       }

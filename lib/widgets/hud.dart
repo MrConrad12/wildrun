@@ -60,25 +60,49 @@ class Hud extends StatelessWidget {
               },
               child: const Icon(Icons.pause, color: Colors.white),
             ),
-            Selector<PlayerData, int>(
-              selector: (_, playerData) => playerData.lives,
-              builder: (_, lives, __) {
-                return Row(
-                  children: List.generate(5, (index) {
-                    if (index < lives) {
-                      return const Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      );
-                    } else {
-                      return const Icon(
-                        Icons.favorite_border,
-                        color: Colors.red,
-                      );
-                    }
-                  }),
-                );
-              },
+            Column(
+              children: [
+                Selector<PlayerData, int>(
+                  selector: (_, playerData) => playerData.lives,
+                  builder: (_, lives, __) {
+                    return Row(
+                      children: List.generate(5, (index) {
+                        if (index < lives) {
+                          return const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          );
+                        } else {
+                          return const Icon(
+                            Icons.favorite_border,
+                            color: Colors.red,
+                          );
+                        }
+                      }),
+                    );
+                  },
+                ),
+                Selector<PlayerData, int>(
+                  selector: (_, playerData) => playerData.attack,
+                  builder: (_, attack, __) {
+                    return Row(
+                      children: List.generate(5, (index) {
+                        if (index < attack) {
+                          return const Icon(
+                            Icons.cyclone_rounded,
+                            color: Color.fromARGB(255, 58, 88, 255),
+                          );
+                        } else {
+                          return const Icon(
+                            Icons.cyclone_rounded,
+                            color: Color.fromARGB(255, 168, 168, 168),
+                          );
+                        }
+                      }),
+                    );
+                  },
+                ),
+              ],
             )
           ],
         ),

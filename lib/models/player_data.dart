@@ -15,6 +15,16 @@ class PlayerData extends ChangeNotifier with HiveObjectMixin {
     }
   }
 
+  int _attack = 5;
+
+  int get attack => _attack;
+  set attack(int value) {
+    if (value <= 5 && value >= 0) {
+      _attack = value;
+      notifyListeners();
+    }
+  }
+
   // Data for score
   @HiveField(1)
   int highScore = 0;

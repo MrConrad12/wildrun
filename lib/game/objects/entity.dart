@@ -45,6 +45,7 @@ class Entity extends SpriteAnimationComponent
     add(RectangleHitbox(collisionType: CollisionType.passive));
     flipHorizontally();
 
+    // Add some effect if it's fruit
     if (typeBlock == TypeBlock.fruit) {
       add(
         MoveEffect.by(
@@ -59,11 +60,10 @@ class Entity extends SpriteAnimationComponent
     }
   }
 
+  @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Player) {
-      if (typeBlock == TypeBlock.fruit || typeBlock == TypeBlock.bird) {
-        removeFromParent();
-      }
+      removeFromParent();
     }
     super.onCollision(intersectionPoints, other);
   }
