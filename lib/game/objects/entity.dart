@@ -2,9 +2,11 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:wildrun/game/managers/mapping.dart';
 import 'package:flame/effects.dart';
+import '../actors/player.dart';
 import '../wildrun.dart';
 
-class Entity extends SpriteAnimationComponent with HasGameReference<WildRun> {
+class Entity extends SpriteAnimationComponent
+    with CollisionCallbacks, HasGameReference<WildRun> {
   final TypeBlock typeBlock;
   final String urlImg;
   late Vector2 gridPosition;
@@ -55,6 +57,15 @@ class Entity extends SpriteAnimationComponent with HasGameReference<WildRun> {
         ),
       );
     }
+  }
+
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is Player) {
+      if (typeBlock == TypeBlock.fruit || typeBlock == TypeBlock.bird) {
+        removeFromParent();
+      }
+    }
+    super.onCollision(intersectionPoints, other);
   }
 
   @override

@@ -24,56 +24,6 @@ enum PlayerAnimationStates {
 // Player class representing the main character in the game
 class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     with CollisionCallbacks, HasGameReference<WildRun> {
-  // Static map for storing animation data
-  static final _animationMap = {
-    PlayerAnimationStates.idle: SpriteAnimationData.sequenced(
-      amount: 2,
-      stepTime: 0.1,
-      textureSize: Vector2.all(32),
-    ),
-    PlayerAnimationStates.walk: SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.1,
-      textureSize: Vector2.all(32),
-      texturePosition: Vector2(0, (2) * 32),
-    ),
-    PlayerAnimationStates.run: SpriteAnimationData.sequenced(
-      amount: 8,
-      stepTime: 0.05,
-      textureSize: Vector2.all(32),
-      texturePosition: Vector2(0, (3) * 32),
-    ),
-    PlayerAnimationStates.hit: SpriteAnimationData.sequenced(
-      amount: 1,
-      stepTime: 0.1,
-      textureSize: Vector2.all(32),
-      texturePosition: Vector2(32, (6) * 32),
-    ),
-    PlayerAnimationStates.attack: SpriteAnimationData.sequenced(
-      amount: 8,
-      stepTime: 0.1,
-      textureSize: Vector2.all(32),
-      texturePosition: Vector2(0, (8) * 32),
-    ),
-    PlayerAnimationStates.death: SpriteAnimationData.sequenced(
-      amount: 8,
-      stepTime: 0.5,
-      textureSize: Vector2.all(32),
-      texturePosition: Vector2(0, (7) * 32),
-    ),
-    PlayerAnimationStates.jump: SpriteAnimationData.sequenced(
-      amount: 8,
-      stepTime: 0.5,
-      textureSize: Vector2.all(32),
-      texturePosition: Vector2(0, (5) * 32),
-    ),
-    PlayerAnimationStates.fly: SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.2,
-      textureSize: Vector2.all(32),
-      texturePosition: Vector2((2) * 32, (5) * 32),
-    ),
-  };
   // Player's maximum y-coordinate
   double yMax = 0.0;
 
@@ -84,20 +34,22 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   // Flags for jump-related actions
   bool hasJumped = false;
   bool touchPlatform = false;
-  bool jumping = false;
 
   // Flag for checking if the player is on the ground
   bool get isOnGround => (y >= yMax);
 
   // Timer for various effects
   final Timer _effectTimer = Timer(.5);
+  final Timer _flyTimer = Timer(3);
   static const double gravity = 710;
   final PlayerData playerData;
 
   // Flags for hit, heal, and attack states
   bool isHit = false;
+  bool isJump = false;
   bool isHeal = false;
   bool isAttack = false;
+  bool isFly = false;
 
   // Constructor for Player class
   Player(Image image, this.playerData)
@@ -120,6 +72,11 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
       isHit = false;
       isHeal = false;
       isAttack = false;
+      isFly = false;
+    };
+    _flyTimer.onTick = () {
+      current = PlayerAnimationStates.run;
+      isFly = false;
     };
     super.onMount();
   }
@@ -127,44 +84,63 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   // update method for updating player properties
   @override
   void update(double dt) {
-    speedY += gravity * dt;
-    y += speedY * dt;
-    if (isOnGround || touchPlatform) {
-      y = touchPlatform ? currentY : yMax;
-      speedY = 0.0;
+    if (!isFly) {
+      _applyGravity(dt);
+    }
+    if (!touchPlatform) {
+      y += speedY * dt;
+    }
+    if (isOnGround) {
+      y = yMax;
       if ((current != PlayerAnimationStates.hit) &&
+          (current != PlayerAnimationStates.fly) &&
           (current != PlayerAnimationStates.run) &&
           (current != PlayerAnimationStates.attack)) {
         current = PlayerAnimationStates.run;
       }
     }
-
     touchPlatform = false;
+
     _effectTimer.update(dt);
+    _flyTimer.update(dt);
+
     super.update(dt);
   }
 
   // onCollision method for handling collisions with other components
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if ((other is Entity) && (other.typeBlock == TypeBlock.wolf) && (!isHit)) {
-      hit();
+    if ((other is Entity)) {
+      if ((other.typeBlock == TypeBlock.wolf) && (!isHit)) {
+        hit();
+      }
+      if ((other.typeBlock == TypeBlock.bird) && (!isFly)) {
+        speedY = 0;
+        hasJumped = true;
+        fly();
+      }
+      if ((other.typeBlock == TypeBlock.fruit) && (!isHeal)) {
+        heal();
+      }
     }
-    if ((other is Entity) && (other.typeBlock == TypeBlock.bird) && (!isHeal)) {
-      heal();
+    if ((other is Decoration) && (other.typeBlock == TypeBlock.platform)) {
+      if (speedY >= 0 && intersectionPoints.elementAt(0).y >= height / 3) {
+        current = PlayerAnimationStates.run;
+        if (!isJump) {
+          touchPlatform = true;
+          speedY = 0;
+          y = other.y - other.height / 2 + 5;
+        }
+      }
     }
-    if ((other is Decoration) &&
-        (other.typeBlock == TypeBlock.platform) &&
-        position.y <= other.posY - 10 &&
-        position.y <= other.posY + 10) {
-      touchPlatform = true;
-      currentY = y;
-    }
-
     super.onCollision(intersectionPoints, other);
   }
 
-  // jump method for making the player jump
+  void _applyGravity(double dt) {
+    speedY += gravity * dt;
+  }
+
+  // jump and double jump perform
   void jump() {
     if (isOnGround || touchPlatform) {
       speedY = -300;
@@ -174,17 +150,19 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
       speedY = -250;
       hasJumped = false;
     }
+    isJump = false;
+    touchPlatform = false;
     current = PlayerAnimationStates.jump;
     AudioManager.instance.playSfx('jump14.wav');
   }
 
-  // attack method for making the player attack
+  // attack perform
   void attack() {
     current = PlayerAnimationStates.attack;
     _effectTimer.start();
   }
 
-  // hit method for handling player hit events
+  // handling hit and set live player
   void hit() {
     isHit = true;
     AudioManager.instance.playSfx('hurt7.wav');
@@ -193,14 +171,23 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     _effectTimer.start();
   }
 
-  // heal method for handling player heal events
+  // handling fly
+  void fly() {
+    isFly = true;
+    //AudioManager.instance.playSfx(''); //song for flying
+    current = PlayerAnimationStates.fly;
+    _flyTimer.start();
+  }
+
+  // handling heal, add live
   void heal() {
     isHeal = true;
+    //AudioManager.instance.playSfx(''); //song for healing
     playerData.lives += 1;
     _effectTimer.start();
   }
 
-  // reset method for resetting player properties
+  // Resetting all player properties
   void _reset() {
     if (isMounted) {
       removeFromParent();
@@ -212,6 +199,61 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     isHit = false;
     isHeal = false;
     isAttack = false;
+    isJump = false;
+    isFly = false;
+    hasJumped = false;
+    touchPlatform = false;
     speedY = 0.0;
   }
 }
+
+// Static map for storing animation data
+final _animationMap = {
+  PlayerAnimationStates.idle: SpriteAnimationData.sequenced(
+    amount: 2,
+    stepTime: 0.1,
+    textureSize: Vector2.all(32),
+  ),
+  PlayerAnimationStates.walk: SpriteAnimationData.sequenced(
+    amount: 4,
+    stepTime: 0.1,
+    textureSize: Vector2.all(32),
+    texturePosition: Vector2(0, (2) * 32),
+  ),
+  PlayerAnimationStates.run: SpriteAnimationData.sequenced(
+    amount: 8,
+    stepTime: 0.05,
+    textureSize: Vector2.all(32),
+    texturePosition: Vector2(0, (3) * 32),
+  ),
+  PlayerAnimationStates.hit: SpriteAnimationData.sequenced(
+    amount: 1,
+    stepTime: 0.1,
+    textureSize: Vector2.all(32),
+    texturePosition: Vector2(32, (6) * 32),
+  ),
+  PlayerAnimationStates.attack: SpriteAnimationData.sequenced(
+    amount: 8,
+    stepTime: 0.1,
+    textureSize: Vector2.all(32),
+    texturePosition: Vector2(0, (8) * 32),
+  ),
+  PlayerAnimationStates.death: SpriteAnimationData.sequenced(
+    amount: 8,
+    stepTime: 0.5,
+    textureSize: Vector2.all(32),
+    texturePosition: Vector2(0, (7) * 32),
+  ),
+  PlayerAnimationStates.jump: SpriteAnimationData.sequenced(
+    amount: 8,
+    stepTime: 0.5,
+    textureSize: Vector2.all(32),
+    texturePosition: Vector2(0, (5) * 32),
+  ),
+  PlayerAnimationStates.fly: SpriteAnimationData.sequenced(
+    amount: 4,
+    stepTime: 0.1,
+    textureSize: Vector2.all(32),
+    texturePosition: Vector2((2) * 32, (5) * 32),
+  ),
+};

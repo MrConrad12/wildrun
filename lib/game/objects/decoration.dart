@@ -25,10 +25,18 @@ class Decoration extends SpriteComponent with HasGameReference<WildRun> {
   void onLoad() {
     final platformImage = game.images.fromCache(urlImg);
     sprite = Sprite(platformImage);
-    position = Vector2(
-      (gridPosition.x * size.x) + xOffset,
-      game.size.y - (gridPosition.y * size.y),
-    );
+    if (typeBlock == TypeBlock.ground) {
+      position = Vector2(
+        (gridPosition.x * size.x) + xOffset,
+        game.size.y - (gridPosition.y * size.y),
+      );
+    } else {
+      position = Vector2(
+        (gridPosition.x * size.x) + xOffset,
+        game.size.y - (gridPosition.y * size.y) - 32 + size.y,
+      );
+    }
+
     add(RectangleHitbox(collisionType: CollisionType.passive));
   }
 

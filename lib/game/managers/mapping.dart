@@ -25,7 +25,6 @@ final segment0 = [
 final segment1 = [
   for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
   Block(Vector2(0, 4), TypeBlock.platform),
-  Block(Vector2(0, 4), TypeBlock.platform),
   Block(Vector2(5, 4), TypeBlock.platform),
   Block(Vector2(1, 1), TypeBlock.wolf),
   Block(Vector2(3, 4), TypeBlock.bird),
@@ -33,16 +32,14 @@ final segment1 = [
 
 final segment2 = [
   for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
-  Block(Vector2(0, 4), TypeBlock.platform),
-  Block(Vector2(5, 4), TypeBlock.platform),
-  Block(Vector2(1, 1), TypeBlock.wolf),
+  for (double i = 0; i <= 9; i++) Block(Vector2(i, 4), TypeBlock.platform),
 ];
 
 final segment3 = [
   for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
   Block(Vector2(3, 3), TypeBlock.platform),
   Block(Vector2(4, 3), TypeBlock.platform),
-  Block(Vector2(5, 3), TypeBlock.platform),
+  Block(Vector2(2, 3), TypeBlock.platform),
   Block(Vector2(3, 1), TypeBlock.wolf),
-  Block(Vector2(4, 2), TypeBlock.bird),
+  Block(Vector2(5, 1), TypeBlock.fruit),
 ];

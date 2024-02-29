@@ -33,8 +33,9 @@ class WildRun extends FlameGame
     'parallax/plx-6.png',
     'parallax/plx-7.png',
     'parallax/plx-8.png',
-    'enemies/enemy.png',
-    'animals/squirel.png',
+    'enemies/CO2.png',
+    'enemies/radioactivity.png',
+    'items/apple.png',
     'animals/bird.png',
     'animals/squirel.png',
     'animals/wolf.png',
@@ -49,7 +50,7 @@ class WildRun extends FlameGame
     'jump14.wav',
   ];
 
-  double objectSpeed = 100;
+  double objectSpeed = 81;
   late Player _player;
   late Settings settings;
   late PlayerData playerData;
@@ -77,8 +78,7 @@ class WildRun extends FlameGame
     // Load parallax background images
     final parallaxBackground = await loadParallaxComponent(
         [for (var i = 1; i <= 8; i++) ParallaxImageData('parallax/plx-$i.png')],
-        baseVelocity: Vector2(10, 0),
-        velocityMultiplierDelta: Vector2(1.38, 0));
+        baseVelocity: Vector2(10, 0), velocityMultiplierDelta: Vector2(1.3, 0));
     camera.backdrop.add(parallaxBackground);
   }
 
@@ -117,7 +117,7 @@ class WildRun extends FlameGame
       pauseEngine();
       AudioManager.instance.pauseBgm();
     }
-    game.playerData.currentScore += ((objectSpeed * dt)).toInt();
+    //game.playerData.currentScore = ((objectSpeed * dt)).toInt();
     super.update(dt);
   }
 
@@ -125,9 +125,9 @@ class WildRun extends FlameGame
   @override
   void onTapDown(TapDownInfo info) {
     if (overlays.isActive(Hud.id)) {
-      if (info.eventPosition.widget.x >= (sizeScreen.width / 2)) {
+      if (info.eventPosition.widget.x >= (sizeScreen.width / 2) &&
+          !_player.isFly) {
         _player.jump();
-        _player.jumping = true;
       }
       if (info.eventPosition.widget.x < (sizeScreen.width / 2)) {
         _player.attack();

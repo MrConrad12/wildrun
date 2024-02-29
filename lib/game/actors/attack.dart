@@ -28,7 +28,7 @@ class GlowingBall extends SpriteAnimationComponent
   @override
   void update(double dt) {
     super.update(dt);
-    position.x -= dt * ballSpeed;
+    position.x += dt * ballSpeed;
     if (position.x > width) {
       removeFromParent();
     }

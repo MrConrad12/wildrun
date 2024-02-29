@@ -36,9 +36,9 @@ class ElementManager extends Component with HasGameReference<WildRun> {
             Decoration(
               typeBlock: TypeBlock.platform,
               urlImg: 'landscape/platform_center.png',
-              sizeElement: Vector2(30, 16),
+              sizeElement: Vector2(32, 12),
               gridPosition: block.gridPosition,
-              xOffset: xPositionOffset,
+              xOffset: xPositionOffset - 32,
             ),
           );
           break;
@@ -47,7 +47,7 @@ class ElementManager extends Component with HasGameReference<WildRun> {
             Entity(
                 typeBlock: TypeBlock.wolf,
                 urlImg: 'animals/wolf.png',
-                sizeElement: Vector2.all(14),
+                sizeElement: Vector2.all(16),
                 gridPosition: block.gridPosition,
                 xOffset: xPositionOffset,
                 spriteSize: Vector2.all(16),
@@ -66,6 +66,19 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 spriteSize: Vector2.all(16),
                 spriteTime: .2,
                 nbFrame: 4),
+          );
+          break;
+        case TypeBlock.fruit:
+          gameRef.world.add(
+            Entity(
+                typeBlock: TypeBlock.fruit,
+                urlImg: 'items/apple.png',
+                sizeElement: Vector2.all(16),
+                gridPosition: block.gridPosition,
+                xOffset: xPositionOffset,
+                spriteSize: Vector2.all(32),
+                spriteTime: .2,
+                nbFrame: 17),
           );
           break;
         default:
