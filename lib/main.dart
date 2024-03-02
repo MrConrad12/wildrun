@@ -1,10 +1,11 @@
 import 'package:flame/camera.dart';
-import 'package:flame/extensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:wildrun/widgets/card_menu.dart';
+import 'package:wildrun/widgets/task_menu.dart';
 
 import 'widgets/hud.dart';
 import 'game/wildrun.dart';
@@ -41,7 +42,7 @@ Future<void> initHive() async {
 
 // Main application widget
 class WildRunApp extends StatelessWidget {
-  const WildRunApp({Key? key});
+  const WildRunApp({super.key});
   // color font:00bf63 back:ffde59
   @override
   Widget build(BuildContext context) {
@@ -54,8 +55,6 @@ class WildRunApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-              //const Color.fromARGB(255, 0, 191, 99),
-              //const Color.fromARGB(255, 255, 222, 89),
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               fixedSize: const Size(200, 60),
               foregroundColor: const Color.fromARGB(255, 0, 191, 99),
@@ -66,7 +65,7 @@ class WildRunApp extends StatelessWidget {
         ),
         iconButtonTheme: IconButtonThemeData(
           style: IconButton.styleFrom(
-            foregroundColor: Color.fromARGB(185, 226, 226, 226),
+            foregroundColor: const Color.fromARGB(185, 226, 226, 226),
           ),
         ),
       ),
@@ -78,7 +77,9 @@ class WildRunApp extends StatelessWidget {
           loadingBuilder: (context) => const Center(
             child: SizedBox(
               width: 200,
-              child: LinearProgressIndicator(),
+              child: LinearProgressIndicator(
+                color: Color.fromARGB(255, 0, 191, 99),
+              ),
             ),
           ),
           // Map of overlay widgets to be displayed over the game
@@ -88,6 +89,8 @@ class WildRunApp extends StatelessWidget {
             Hud.id: (_, game) => Hud(game),
             GameOverMenu.id: (_, game) => GameOverMenu(game),
             SettingsMenu.id: (_, game) => SettingsMenu(game),
+            CardMenu.id: (_, game) => CardMenu(game),
+            TaskMenu.id: (_, game) => TaskMenu(game),
           },
           // Initial active overlays for the game
           initialActiveOverlays: const [MainMenu.id],

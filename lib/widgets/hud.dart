@@ -49,6 +49,29 @@ class Hud extends StatelessWidget {
                     );
                   },
                 ),
+                Selector<PlayerData, int>(
+                  selector: (_, playerData) => playerData.highScore,
+                  builder: (_, highScore, __) {
+                    return Row(
+                      children: [
+                        Icon(Icons.pets),
+                        Text(
+                          ' $highScore',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                Selector<PlayerData, int>(
+                  selector: (_, playerData) => playerData.highScore,
+                  builder: (_, highScore, __) {
+                    return Text(
+                      'High: $highScore',
+                      style: const TextStyle(color: Colors.white),
+                    );
+                  },
+                ),
               ],
             ),
             TextButton(

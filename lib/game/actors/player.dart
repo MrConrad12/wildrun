@@ -53,7 +53,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   bool isAttack = false;
   bool isFly = false;
 
-  // Constructor for Player class
   Player(Image image, this.playerData)
       : super.fromFrameData(image, _animationMap);
 
@@ -76,14 +75,15 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
       isAttack = false;
       isFly = false;
     };
+
     _flyTimer.onTick = () {
       current = PlayerAnimationStates.run;
       isFly = false;
     };
+
     super.onMount();
   }
 
-  // update method for updating player properties
   @override
   void update(double dt) {
     // apply gravity if the player isn't flying
@@ -103,7 +103,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
       }
     }
     touchPlatform = false;
-
     // update all timers
     _effectTimer.update(dt);
     _flyTimer.update(dt);
@@ -111,7 +110,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     super.update(dt);
   }
 
-  // onCollision method for handling collisions with other components
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     entityInteraction(other);
@@ -119,7 +117,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     super.onCollision(intersectionPoints, other);
   }
 
-  //  check if we are hitting a platform
+  // check if we are hitting a platform
   void decorationInteraction(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     if ((other is Decoration) && (other.typeBlock == TypeBlock.platform)) {
@@ -128,7 +126,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
         if (!isJump) {
           touchPlatform = true;
           speedY = 0;
-          y = other.y - other.height / 2 + 5;
+          y = other.y - other.height / 2 + 3.5;
         }
       }
     }
@@ -136,36 +134,46 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
 
   //  check if the player is interacting with an enemy and apply animation
   void entityInteraction(PositionComponent other) {
-    if ((other is Entity)) {
-      if ((other.typeBlock == TypeBlock.wolf) && (!isHit)) {
-        hit();
-      }
-      if ((other.typeBlock == TypeBlock.bird) && (!isFly)) {
-        speedY = 0;
-        hasJumped = true;
-        fly();
-      }
-      if ((other.typeBlock == TypeBlock.fruit) && (!isHeal)) {
-        heal();
-      }
-      if ((other.typeBlock == TypeBlock.waste) && (!isRecharge)) {
-        playerData.attack += 1;
+    if (other is Entity) {
+      switch (other.typeBlock) {
+        case TypeBlock.enemyCO2:
+        case TypeBlock.enemyRadioactive:
+          if (!isHit) {
+            hit();
+          }
+          break;
+        case TypeBlock.bird:
+          if (!isFly) {
+            fly();
+          }
+          break;
+        case TypeBlock.fruit:
+          if (!isHeal) {
+            heal();
+          }
+        case TypeBlock.waste:
+          regeneAttack();
+        default:
+          break;
       }
     }
+  }
+
+  void regeneAttack() {
+    playerData.attack += 1;
   }
 
   void _applyGravity(double dt) {
     speedY += gravity * dt;
   }
 
-  // jump and double jump perform
   void jump() {
     if (isOnGround || touchPlatform) {
-      speedY = -300;
+      speedY = -250;
       hasJumped = true;
     }
     if (!isOnGround && hasJumped && !touchPlatform) {
-      speedY = -200;
+      speedY = -250;
       hasJumped = false;
     }
     isJump = false;
@@ -174,17 +182,13 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     AudioManager.instance.playSfx('jump14.wav');
   }
 
-  // attack perform
   void attack() {
-    current = PlayerAnimationStates.attack;
-    playerData.attack -= 1;
-    if (playerData.attack >= 0) {
+    if (playerData.attack > 0) {
       game.world.add(GlowingBall());
     }
-    _effectTimer.start();
+    playerData.attack -= 1;
   }
 
-  // handling hit and set live player
   void hit() {
     isHit = true;
     AudioManager.instance.playSfx('hurt7.wav');
@@ -193,24 +197,22 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     _effectTimer.start();
   }
 
-  // handling fly
   void fly() {
     isFly = true;
+    speedY = 0;
+    hasJumped = true;
     //AudioManager.instance.playSfx(''); //song for flying
     current = PlayerAnimationStates.fly;
     _flyTimer.start();
   }
 
-  // handling heal, add live
   void heal() {
     //AudioManager.instance.playSfx(''); //song for healing
-
     isHeal = true;
     playerData.lives += 1;
     _effectTimer.start();
   }
 
-  // Resetting all player properties
   void _reset() {
     if (isMounted) {
       removeFromParent();

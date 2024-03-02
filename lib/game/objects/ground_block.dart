@@ -27,7 +27,7 @@ class GroundBlock extends SpriteComponent with HasGameReference<WildRun> {
     sprite = Sprite(groundImage);
     position = Vector2(
       gridPosition.x * size.x + xOffset,
-      game.size.y - gridPosition.y * size.y + 7,
+      game.size.y - gridPosition.y * size.y,
     );
     add(RectangleHitbox(collisionType: CollisionType.passive));
     if (gridPosition.x == 9 && position.x > game.lastBlockXPosition) {

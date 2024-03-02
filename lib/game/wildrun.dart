@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -35,7 +37,7 @@ class WildRun extends FlameGame
     'parallax/plx-8.png',
     'enemies/CO2.png',
     'enemies/radioactivity.png',
-    'items/apple.png',
+    'items/Apple.png',
     'animals/bird.png',
     'animals/squirel.png',
     'animals/wolf.png',
@@ -44,6 +46,7 @@ class WildRun extends FlameGame
     'landscape/ground.png',
     'landscape/void.png',
     'landscape/platform_center.png',
+    'cards/wolf1.jpg',
   ];
   // Asset paths for audio files
   static const _audioAssets = [
@@ -52,11 +55,12 @@ class WildRun extends FlameGame
     'jump14.wav',
   ];
 
-  double objectSpeed = 81.5;
+  double objectSpeed = 90;
   late Player _player;
   late Settings settings;
   late PlayerData playerData;
   late ElementManager _elementManager;
+  double timer = .0;
   get elementManager => _elementManager;
   late double lastBlockXPosition = 0.0;
   late UniqueKey lastBlockKey;
@@ -86,7 +90,9 @@ class WildRun extends FlameGame
     // Load parallax background images
     final parallaxBackground = await loadParallaxComponent(
         [for (var i = 1; i <= 8; i++) ParallaxImageData('parallax/plx-$i.png')],
-        baseVelocity: Vector2(10, 0), velocityMultiplierDelta: Vector2(1.3, 0));
+        baseVelocity: Vector2(10, 0),
+        velocityMultiplierDelta:
+            Vector2(pow(objectSpeed / 10, 1 / 8) as double, 0));
     camera.backdrop.add(parallaxBackground);
   }
 
@@ -126,7 +132,11 @@ class WildRun extends FlameGame
       pauseEngine();
       AudioManager.instance.pauseBgm();
     }
-    //game.playerData.currentScore = ((objectSpeed * dt)).toInt();
+    timer += ((objectSpeed * dt)).toInt();
+    if (timer >= 8) {
+      game.playerData.currentScore += 1;
+      timer %= 10;
+    }
     super.update(dt);
   }
 
@@ -191,6 +201,7 @@ class WildRun extends FlameGame
           overlays.remove(Hud.id);
           overlays.add(PauseMenu.id);
         }
+        AudioManager.instance.pauseBgm();
         pauseEngine();
         break;
     }

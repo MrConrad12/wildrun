@@ -27,15 +27,7 @@ class GlowingBall extends SpriteAnimationComponent
     );
     position = Vector2(
         infoPlayer.x + infoPlayer.width, infoPlayer.y - infoPlayer.height / 3);
-    add(RectangleHitbox(collisionType: CollisionType.passive));
-  }
-
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if ((other is Entity) && (other.typeBlock == TypeBlock.wolf)) {
-      removeFromParent();
-    }
-    super.onCollision(intersectionPoints, other);
+    add(RectangleHitbox(collisionType: CollisionType.active));
   }
 
   @override
@@ -45,5 +37,16 @@ class GlowingBall extends SpriteAnimationComponent
     if (position.x > game.sizeScreen.width) {
       removeFromParent();
     }
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if ((other is Entity) &&
+        (other.typeBlock == TypeBlock.enemyCO2 ||
+            other.typeBlock == TypeBlock.enemyRadioactive)) {
+      removeFromParent();
+      //add audio effect
+    }
+    super.onCollision(intersectionPoints, other);
   }
 }

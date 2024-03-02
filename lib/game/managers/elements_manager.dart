@@ -16,7 +16,7 @@ class ElementManager extends Component with HasGameReference<WildRun> {
     segmentsToLoad = (gameRef.size.x / 320).ceil();
     segmentsToLoad.clamp(0, segments.length);
     for (var i = 0; i <= segmentsToLoad; i++) {
-      loadGameRefSegments(i, (320 * i - 2).toDouble());
+      loadGameRefSegments(i, (320 * i).toDouble());
     }
   }
 
@@ -72,8 +72,8 @@ class ElementManager extends Component with HasGameReference<WildRun> {
           gameRef.world.add(
             Entity(
                 typeBlock: TypeBlock.fruit,
-                urlImg: 'items/apple.png',
-                sizeElement: Vector2.all(16),
+                urlImg: 'items/Apple.png',
+                sizeElement: Vector2.all(18),
                 gridPosition: block.gridPosition,
                 xOffset: xPositionOffset,
                 spriteSize: Vector2.all(32),
@@ -86,7 +86,7 @@ class ElementManager extends Component with HasGameReference<WildRun> {
             Entity(
                 typeBlock: TypeBlock.waste,
                 urlImg: 'landscape/waste.png',
-                sizeElement: Vector2(32, 26),
+                sizeElement: Vector2(30, 24),
                 gridPosition: block.gridPosition,
                 xOffset: xPositionOffset,
                 spriteSize: Vector2(64, 54),
@@ -103,7 +103,7 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 gridPosition: block.gridPosition,
                 xOffset: xPositionOffset,
                 spriteSize: Vector2(44, 30),
-                spriteTime: .5,
+                spriteTime: .2,
                 nbFrame: 10),
           );
           break;
@@ -116,7 +116,7 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 gridPosition: block.gridPosition,
                 xOffset: xPositionOffset,
                 spriteSize: Vector2(44, 30),
-                spriteTime: .5,
+                spriteTime: .2,
                 nbFrame: 10),
           );
           break;

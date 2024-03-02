@@ -28,7 +28,7 @@ final segment0 = [
 final segment1 = [
   for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
   Block(Vector2(0, 4), TypeBlock.platform),
-  Block(Vector2(5, 4), TypeBlock.platform),
+  Block(Vector2(5, 2), TypeBlock.platform),
   Block(Vector2(1, 1), TypeBlock.wolf),
   Block(Vector2(3, 4), TypeBlock.bird),
   Block(Vector2(7, 1), TypeBlock.waste),
@@ -36,16 +36,16 @@ final segment1 = [
 
 final segment2 = [
   for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
-  for (double i = 0; i <= 9; i++) Block(Vector2(i, 4), TypeBlock.platform),
+  for (double i = 0; i <= 3; i++) Block(Vector2(i, 2), TypeBlock.platform),
   Block(Vector2(1, 1), TypeBlock.waste),
   Block(Vector2(7, 1), TypeBlock.enemyRadioactive),
 ];
 
 final segment3 = [
   for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
+  Block(Vector2(1, 2), TypeBlock.platform),
   Block(Vector2(3, 3), TypeBlock.platform),
   Block(Vector2(4, 3), TypeBlock.platform),
-  Block(Vector2(2, 3), TypeBlock.platform),
   Block(Vector2(3, 1), TypeBlock.wolf),
   Block(Vector2(0, 1), TypeBlock.fruit),
   Block(Vector2(1, 1), TypeBlock.waste),

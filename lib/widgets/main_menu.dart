@@ -1,9 +1,11 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+
+import '/widgets/card_menu.dart';
 import '/widgets/hud.dart';
 import '/game/wildrun.dart';
 import '/widgets/settings_menu.dart';
+import 'task_menu.dart';
 
 class MainMenu extends StatelessWidget {
   static const id = "MainMenu";
@@ -38,16 +40,18 @@ class MainMenu extends StatelessWidget {
                           icon: const Icon(Icons.info_outline_rounded)),
                       IconButton(
                           tooltip: 'view tasks',
-                          onPressed: () {},
+                          onPressed: () {
+                            game.overlays.remove(MainMenu.id);
+                            game.overlays.add(TaskMenu.id);
+                          },
                           icon: const Icon(Icons.task_alt)),
                       IconButton(
                           tooltip: 'view cards',
-                          onPressed: () {},
+                          onPressed: () {
+                            game.overlays.remove(MainMenu.id);
+                            game.overlays.add(CardMenu.id);
+                          },
                           icon: const Icon(Icons.content_copy_outlined)),
-                      IconButton(
-                          tooltip: 'go to store',
-                          onPressed: () {},
-                          icon: const Icon(Icons.store)),
                       IconButton(
                           tooltip: 'go to settings',
                           onPressed: () {
@@ -55,6 +59,10 @@ class MainMenu extends StatelessWidget {
                             game.overlays.add(SettingsMenu.id);
                           },
                           icon: const Icon(Icons.settings)),
+                      IconButton(
+                          tooltip: 'Exit',
+                          onPressed: () {},
+                          icon: const Icon(Icons.cancel_outlined)),
                     ],
                   ),
                   Image.asset(
