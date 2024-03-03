@@ -42,6 +42,20 @@ class ElementManager extends Component with HasGameReference<WildRun> {
             ),
           );
           break;
+        case TypeBlock.spiked:
+          gameRef.world.add(
+            Entity(
+                typeBlock: TypeBlock.spiked,
+                urlImg: 'landscape/spiked.png',
+                sizeElement: Vector2(32, 20),
+                gridPosition: block.gridPosition,
+                xOffset: xPositionOffset,
+                spriteSize: Vector2(36, 9),
+                spriteTime: 1,
+                nbFrame: 1,
+                bonusScore: 0),
+          );
+          break;
         case TypeBlock.wolf:
           gameRef.world.add(
             Entity(
@@ -52,7 +66,8 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 xOffset: xPositionOffset,
                 spriteSize: Vector2.all(16),
                 spriteTime: .5,
-                nbFrame: 4),
+                nbFrame: 4,
+                bonusScore: 30),
           );
           break;
         case TypeBlock.bird:
@@ -65,7 +80,8 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 xOffset: xPositionOffset,
                 spriteSize: Vector2.all(16),
                 spriteTime: .2,
-                nbFrame: 4),
+                nbFrame: 4,
+                bonusScore: 50),
           );
           break;
         case TypeBlock.fruit:
@@ -78,7 +94,8 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 xOffset: xPositionOffset,
                 spriteSize: Vector2.all(32),
                 spriteTime: .2,
-                nbFrame: 17),
+                nbFrame: 17,
+                bonusScore: 10),
           );
           break;
         case TypeBlock.waste:
@@ -86,12 +103,13 @@ class ElementManager extends Component with HasGameReference<WildRun> {
             Entity(
                 typeBlock: TypeBlock.waste,
                 urlImg: 'landscape/waste.png',
-                sizeElement: Vector2(30, 24),
+                sizeElement: Vector2(26, 20),
                 gridPosition: block.gridPosition,
                 xOffset: xPositionOffset,
                 spriteSize: Vector2(64, 54),
                 spriteTime: .2,
-                nbFrame: 1),
+                nbFrame: 1,
+                bonusScore: 75),
           );
           break;
         case TypeBlock.enemyCO2:
@@ -104,7 +122,8 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 xOffset: xPositionOffset,
                 spriteSize: Vector2(44, 30),
                 spriteTime: .2,
-                nbFrame: 10),
+                nbFrame: 10,
+                bonusScore: 80),
           );
           break;
         case TypeBlock.enemyRadioactive:
@@ -117,7 +136,22 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 xOffset: xPositionOffset,
                 spriteSize: Vector2(44, 30),
                 spriteTime: .2,
-                nbFrame: 10),
+                nbFrame: 10,
+                bonusScore: 80),
+          );
+          break;
+        case TypeBlock.seed:
+          gameRef.world.add(
+            Entity(
+                typeBlock: TypeBlock.seed,
+                urlImg: 'items/seed.png',
+                sizeElement: Vector2(28, 28),
+                gridPosition: block.gridPosition,
+                xOffset: xPositionOffset,
+                spriteSize: Vector2(500, 500),
+                spriteTime: .2,
+                nbFrame: 1,
+                bonusScore: 100),
           );
           break;
         default:

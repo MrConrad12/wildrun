@@ -43,7 +43,6 @@ Future<void> initHive() async {
 // Main application widget
 class WildRunApp extends StatelessWidget {
   const WildRunApp({super.key});
-  // color font:00bf63 back:ffde59
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

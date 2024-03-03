@@ -72,7 +72,7 @@ class _CardViewState extends State<CardView> {
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
+    //final Size screenSize = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -91,12 +91,13 @@ class _CardViewState extends State<CardView> {
                   onPressed: () {
                     widget.game.overlays.remove(CardMenu.id);
                     widget.game.overlays.add(MainMenu.id);
+                    widget.game.reset();
                   },
                   icon: const Icon(Icons.cancel_outlined))
             ],
           ),
-          Container(
-            height: screenSize.height * .7,
+          Expanded(
+            // height: screenSize.height * .7,
             child: Scrollbar(
               thickness: 10,
               thumbVisibility: true,

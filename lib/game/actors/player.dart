@@ -9,18 +9,7 @@ import '/game/wildrun.dart';
 import '../managers/audio_manager.dart';
 import '/models/player_data.dart';
 import 'attack.dart';
-
-// Enum for Player's animation states
-enum PlayerAnimationStates {
-  idle,
-  walk,
-  run,
-  hit,
-  attack,
-  death,
-  jump,
-  fly,
-}
+import 'package:wildrun/game/actors/player_animation.dart';
 
 // Player class representing the main character in the game
 class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
@@ -54,7 +43,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   bool isFly = false;
 
   Player(Image image, this.playerData)
-      : super.fromFrameData(image, _animationMap);
+      : super.fromFrameData(image, animationMap);
 
   @override
   void onMount() {
@@ -137,10 +126,14 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     if (other is Entity) {
       switch (other.typeBlock) {
         case TypeBlock.enemyCO2:
+        case TypeBlock.spiked:
         case TypeBlock.enemyRadioactive:
           if (!isHit) {
             hit();
           }
+          break;
+        case TypeBlock.wolf:
+          playerData.nbAnimal += 1;
           break;
         case TypeBlock.bird:
           if (!isFly) {
@@ -161,6 +154,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
 
   void regeneAttack() {
     playerData.attack += 1;
+    playerData.nbWaste += 1;
   }
 
   void _applyGravity(double dt) {
@@ -186,6 +180,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     if (playerData.attack > 0) {
       game.world.add(GlowingBall());
     }
+    _effectTimer.start();
     playerData.attack -= 1;
   }
 
@@ -201,6 +196,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     isFly = true;
     speedY = 0;
     hasJumped = true;
+    playerData.nbAnimal += 1;
     //AudioManager.instance.playSfx(''); //song for flying
     current = PlayerAnimationStates.fly;
     _flyTimer.start();
@@ -232,54 +228,3 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     speedY = 0.0;
   }
 }
-
-// Static map for storing animation data
-final _animationMap = {
-  PlayerAnimationStates.idle: SpriteAnimationData.sequenced(
-    amount: 2,
-    stepTime: 0.1,
-    textureSize: Vector2.all(32),
-  ),
-  PlayerAnimationStates.walk: SpriteAnimationData.sequenced(
-    amount: 4,
-    stepTime: 0.1,
-    textureSize: Vector2.all(32),
-    texturePosition: Vector2(0, (2) * 32),
-  ),
-  PlayerAnimationStates.run: SpriteAnimationData.sequenced(
-    amount: 8,
-    stepTime: 0.05,
-    textureSize: Vector2.all(32),
-    texturePosition: Vector2(0, (3) * 32),
-  ),
-  PlayerAnimationStates.hit: SpriteAnimationData.sequenced(
-    amount: 1,
-    stepTime: 0.05,
-    textureSize: Vector2.all(32),
-    texturePosition: Vector2(32, (6) * 32),
-  ),
-  PlayerAnimationStates.attack: SpriteAnimationData.sequenced(
-    amount: 8,
-    stepTime: 0.1,
-    textureSize: Vector2.all(32),
-    texturePosition: Vector2(0, (8) * 32),
-  ),
-  PlayerAnimationStates.death: SpriteAnimationData.sequenced(
-    amount: 8,
-    stepTime: 0.5,
-    textureSize: Vector2.all(32),
-    texturePosition: Vector2(0, (7) * 32),
-  ),
-  PlayerAnimationStates.jump: SpriteAnimationData.sequenced(
-    amount: 8,
-    stepTime: 0.5,
-    textureSize: Vector2.all(32),
-    texturePosition: Vector2(0, (5) * 32),
-  ),
-  PlayerAnimationStates.fly: SpriteAnimationData.sequenced(
-    amount: 4,
-    stepTime: 0.1,
-    textureSize: Vector2.all(32),
-    texturePosition: Vector2((2) * 32, (5) * 32),
-  ),
-};

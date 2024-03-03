@@ -15,7 +15,7 @@ class Hud extends StatelessWidget {
 
   // Reference to parent game.
   final WildRun game;
-
+  final double iconSize = 20;
   const Hud(this.game, {super.key});
 
   @override
@@ -36,39 +36,100 @@ class Hud extends StatelessWidget {
                   builder: (_, score, __) {
                     return Text(
                       'Score: $score',
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
-                    );
-                  },
-                ),
-                Selector<PlayerData, int>(
-                  selector: (_, playerData) => playerData.highScore,
-                  builder: (_, highScore, __) {
-                    return Text(
-                      'High: $highScore',
                       style: const TextStyle(color: Colors.white),
                     );
                   },
                 ),
                 Selector<PlayerData, int>(
-                  selector: (_, playerData) => playerData.highScore,
-                  builder: (_, highScore, __) {
-                    return Row(
-                      children: [
-                        Icon(Icons.pets),
-                        Text(
-                          ' $highScore',
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ],
+                  selector: (_, playerData) => playerData.currentDistance,
+                  builder: (_, distance, __) {
+                    return Text(
+                      'Distance: $distance',
+                      style: const TextStyle(color: Colors.white),
                     );
                   },
                 ),
                 Selector<PlayerData, int>(
-                  selector: (_, playerData) => playerData.highScore,
-                  builder: (_, highScore, __) {
-                    return Text(
-                      'High: $highScore',
-                      style: const TextStyle(color: Colors.white),
+                  selector: (_, playerData) => playerData.nbEnemy,
+                  builder: (_, enemy, __) {
+                    return Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.bug_report_rounded,
+                            size: iconSize,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            ' $enemy',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                Selector<PlayerData, int>(
+                  selector: (_, playerData) => playerData.nbTree,
+                  builder: (_, tree, __) {
+                    return Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.grass,
+                            size: iconSize,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            ' $tree',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                Selector<PlayerData, int>(
+                  selector: (_, playerData) => playerData.nbAnimal,
+                  builder: (_, animal, __) {
+                    return Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.pets,
+                            size: iconSize,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            ' $animal',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                Selector<PlayerData, int>(
+                  selector: (_, playerData) => playerData.nbWaste,
+                  builder: (_, waste, __) {
+                    return Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.recycling_rounded,
+                            size: iconSize,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            ' $waste',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),

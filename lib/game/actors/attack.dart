@@ -7,22 +7,29 @@ import 'player.dart';
 
 class GlowingBall extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameReference<WildRun> {
-  double ballSpeed = 100;
+  double ballSpeed = 120;
+  double _distanceBall = 100;
+  set distanceBall(value) {
+    _distanceBall = value;
+  }
+
+  late double startPositionX;
   GlowingBall()
       : super(
-          size: Vector2(12, 14),
+          size: Vector2(16, 16),
           anchor: Anchor.center,
         );
 
   @override
   void onLoad() {
     Player infoPlayer = game.player;
+    startPositionX = infoPlayer.x + infoPlayer.width;
     animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('effects/glowingball.png'),
+      game.images.fromCache('effects/attack.png'),
       SpriteAnimationData.sequenced(
-        amount: 5,
+        amount: 6,
         stepTime: .2,
-        textureSize: Vector2(192, 205),
+        textureSize: Vector2(32, 32),
       ),
     );
     position = Vector2(
@@ -34,7 +41,9 @@ class GlowingBall extends SpriteAnimationComponent
   void update(double dt) {
     super.update(dt);
     position.x += dt * ballSpeed;
-    if (position.x > game.sizeScreen.width) {
+
+    if (position.x > startPositionX + _distanceBall) {
+      //game.sizeScreen.width
       removeFromParent();
     }
   }

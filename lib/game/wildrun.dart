@@ -38,12 +38,15 @@ class WildRun extends FlameGame
     'enemies/CO2.png',
     'enemies/radioactivity.png',
     'items/Apple.png',
+    'items/seed.png',
     'animals/bird.png',
     'animals/squirel.png',
     'animals/wolf.png',
-    'effects/glowingball.png',
+    'effects/attack.png',
     'landscape/waste.png',
     'landscape/ground.png',
+    'landscape/spiked.png',
+    'landscape/spikedPlatform.png',
     'landscape/void.png',
     'landscape/platform_center.png',
     'cards/wolf1.jpg',
@@ -121,11 +124,16 @@ class WildRun extends FlameGame
     playerData.currentScore = 0;
     playerData.lives = 5;
     playerData.attack = 5;
+    playerData.nbWaste = 0;
+    playerData.nbAnimal = 0;
+    playerData.nbTree = 0;
+    playerData.nbEnemy = 0;
   }
 
   // Method called on every game update
   @override
   void update(double dt) {
+    int incrementDistance = 1;
     if (playerData.lives <= 0) {
       overlays.add(GameOverMenu.id);
       overlays.remove(Hud.id);
@@ -134,7 +142,8 @@ class WildRun extends FlameGame
     }
     timer += ((objectSpeed * dt)).toInt();
     if (timer >= 8) {
-      game.playerData.currentScore += 1;
+      game.playerData.currentDistance += incrementDistance;
+      game.playerData.currentScore += incrementDistance * 2;
       timer %= 10;
     }
     super.update(dt);
@@ -154,6 +163,7 @@ class WildRun extends FlameGame
         _player.attack();
       }
     }
+
     super.onTapDown(info);
   }
 
@@ -190,6 +200,7 @@ class WildRun extends FlameGame
       case AppLifecycleState.resumed:
         if (!(overlays.isActive(PauseMenu.id)) &&
             !(overlays.isActive(GameOverMenu.id))) {
+          AudioManager.instance.resumeBgm();
           resumeEngine();
         }
         break;

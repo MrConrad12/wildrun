@@ -27,7 +27,7 @@ class TaskMenu extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.black.withAlpha(100),
-            child: CardView(
+            child: TaskView(
               game: game,
             ),
           ),
@@ -37,42 +37,15 @@ class TaskMenu extends StatelessWidget {
   }
 }
 
-List<Map<String, String>> tasks = [
-  {
-    "name": "Tâche 1",
-  },
-  {
-    "name": "Tâche 2",
-  },
-  {
-    "name": "Tâche 3",
-  },
-  {
-    "name": "Tâche 4",
-  },
-  {
-    "name": "Tâche 4",
-  },
-  {
-    "name": "Tâche 4",
-  },
-  {
-    "name": "Tâche 4",
-  },
-  {
-    "name": "Tâche 4",
-  },
-]; // Ajoutez vos tâches ici
-
-class CardView extends StatefulWidget {
+class TaskView extends StatefulWidget {
   final WildRun game;
-  const CardView({super.key, required this.game});
+  const TaskView({super.key, required this.game});
 
   @override
-  State<CardView> createState() => _CardViewState();
+  State<TaskView> createState() => _TaskViewState();
 }
 
-class _CardViewState extends State<CardView> {
+class _TaskViewState extends State<TaskView> {
   late ScrollController _scrollController;
   @override
   void initState() {
@@ -88,7 +61,6 @@ class _CardViewState extends State<CardView> {
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -107,21 +79,95 @@ class _CardViewState extends State<CardView> {
                   onPressed: () {
                     widget.game.overlays.remove(TaskMenu.id);
                     widget.game.overlays.add(MainMenu.id);
+                    widget.game.reset();
                   },
                   icon: const Icon(Icons.cancel_outlined))
             ],
           ),
-          Container(
-              height: screenSize.height * .7,
+          Expanded(
               child: AnimatedList(
-                initialItemCount: tasks.length,
-                itemBuilder: (context, index, animation) => TaskGame(
-                  taskData: tasks[index],
-                ),
-              )
-              ),
+            initialItemCount: tasks.length,
+            itemBuilder: (context, index, animation) => TaskGame(
+              taskData: tasks[index].name,
+            ),
+          )),
         ],
       ),
     );
   }
 }
+
+enum TypeTask {
+  tree,
+  animal,
+  waste,
+  enemy,
+  run,
+}
+
+class TaskInfo {
+  final int idTask;
+  final String name;
+  final String act;
+  final String target;
+  final TypeTask type;
+  final int goal;
+
+  get desc => "$act $goal $target";
+  bool _hasDone = false;
+  get hasDone => _hasDone;
+  set hasDone(value) {
+    _hasDone = value;
+  }
+
+  TaskInfo(
+      {required this.idTask,
+      required this.name,
+      required this.act,
+      required this.target,
+      required this.type,
+      required this.goal});
+}
+
+List<TaskInfo> tasks = [
+  for (int i = 0; i < 10; i++)
+    TaskInfo(
+        idTask: i,
+        name: '',
+        act: 'cover',
+        target: 'distance',
+        type: TypeTask.run,
+        goal: i),
+  for (int i = 0; i < 10; i++)
+    TaskInfo(
+        idTask: i,
+        name: '',
+        act: 'save',
+        target: 'animals',
+        type: TypeTask.animal,
+        goal: i),
+  for (int i = 0; i < 10; i++)
+    TaskInfo(
+        idTask: i,
+        name: '',
+        act: 'defeat',
+        target: 'enemies',
+        type: TypeTask.enemy,
+        goal: i),
+  for (int i = 0; i < 10; i++)
+    TaskInfo(
+        idTask: i,
+        name: '',
+        act: 'plant',
+        target: 'tree',
+        type: TypeTask.tree,
+        goal: i),
+  for (int i = 0; i < 10; i++)
+    TaskInfo(
+        idTask: i,
+        name: '',
+        act: 'recycle',
+        target: 'wastes',
+        type: TypeTask.waste,
+        goal: i),
+]; // Ajoutez vos tâches ici

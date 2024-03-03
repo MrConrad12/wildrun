@@ -40,11 +40,6 @@ class GroundBlock extends SpriteComponent with HasGameReference<WildRun> {
   void update(double dt) {
     velocity.x = -game.objectSpeed;
     position += velocity * dt;
-    if (gridPosition.x == 9) {
-      if (game.lastBlockKey == _blockKey) {
-        game.lastBlockXPosition = position.x + size.x - 10;
-      }
-    }
     if (position.x < -size.x) {
       removeFromParent();
       if (gridPosition.x == 0) {

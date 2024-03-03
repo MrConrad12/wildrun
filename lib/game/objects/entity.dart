@@ -17,6 +17,7 @@ class Entity extends SpriteAnimationComponent
   final Vector2 spriteSize;
   final int nbFrame;
   final double spriteTime;
+  final int bonusScore;
   int live = 2;
 
   Entity({
@@ -28,11 +29,16 @@ class Entity extends SpriteAnimationComponent
     required this.spriteTime,
     required this.gridPosition,
     required this.xOffset,
+    required this.bonusScore,
   }) : super(size: sizeElement, anchor: Anchor.center);
 
   @override
   void onLoad() {
     const double sizeBox = 32;
+    double platformSize = 0;
+    if (gridPosition.y > 1) {
+      platformSize = 12;
+    }
     animation = SpriteAnimation.fromFrameData(
       game.images.fromCache(urlImg),
       SpriteAnimationData.sequenced(
@@ -43,7 +49,7 @@ class Entity extends SpriteAnimationComponent
     );
     position = Vector2(
       (gridPosition.x * sizeBox) + xOffset,
-      game.size.y - (gridPosition.y * sizeBox),
+      game.size.y - (gridPosition.y * sizeBox) - platformSize,
     );
     add(RectangleHitbox(collisionType: CollisionType.active));
 
@@ -63,11 +69,23 @@ class Entity extends SpriteAnimationComponent
           ),
         );
         break;
+      case TypeBlock.seed:
+        add(
+          MoveEffect.by(
+            Vector2(0, -.2 * size.x),
+            EffectController(
+              duration: 1,
+              alternate: true,
+              infinite: true,
+            ),
+          ),
+        );
+        break;
       case TypeBlock.waste:
       case TypeBlock.fruit:
         add(
           SizeEffect.by(
-            Vector2.all(.2),
+            Vector2.all(.2 * size.x),
             EffectController(
               duration: 2,
               alternate: true,
@@ -89,6 +107,8 @@ class Entity extends SpriteAnimationComponent
           live -= 1;
           if (live == 0) {
             add(RemoveEffect());
+            game.playerData.nbEnemy += 1;
+            game.playerData.currentScore += bonusScore;
             removeFromParent();
           }
         }
@@ -96,8 +116,10 @@ class Entity extends SpriteAnimationComponent
       case TypeBlock.bird:
       case TypeBlock.waste:
       case TypeBlock.wolf:
+      case TypeBlock.seed:
       case TypeBlock.fruit:
         if (other is Player) {
+          game.playerData.currentScore += bonusScore;
           removeFromParent();
         }
         // add song effect

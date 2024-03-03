@@ -8,7 +8,7 @@ class CardGame extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
     return SizedBox(
       width: screenSize.height * .7 * 2 / 3,
-      height: screenSize.height * .8,
+      height: screenSize.height * .7,
       child: Card(
         elevation: 12,
         child: ClipRRect(

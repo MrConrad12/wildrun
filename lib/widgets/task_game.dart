@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'task_menu.dart';
 
 class TaskGame extends StatefulWidget {
-  final Map taskData;
+  final TaskInfo taskData;
   const TaskGame({super.key, required this.taskData});
 
   @override

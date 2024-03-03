@@ -60,6 +60,7 @@ class SettingsMenu extends StatelessWidget {
                               AudioManager.instance.stopBgm();
                             }
                           },
+                          activeColor: const Color.fromARGB(255, 0, 191, 99),
                         );
                       },
                     ),
@@ -79,6 +80,7 @@ class SettingsMenu extends StatelessWidget {
                             Provider.of<Settings>(context, listen: false).sfx =
                                 value;
                           },
+                          activeColor: const Color.fromARGB(255, 0, 191, 99),
                         );
                       },
                     ),
@@ -87,7 +89,8 @@ class SettingsMenu extends StatelessWidget {
                         game.overlays.remove(SettingsMenu.id);
                         game.overlays.add(MainMenu.id);
                       },
-                      child: const Icon(Icons.arrow_back_ios_rounded),
+                      child: const Icon(Icons.arrow_back_ios_rounded,
+                          color: Color.fromARGB(255, 0, 191, 99)),
                     ),
                   ],
                 ),
