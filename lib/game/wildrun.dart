@@ -4,10 +4,12 @@ import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/components.dart';
+import 'package:wildrun/game/managers/task_manager.dart';
 
 import 'actors/player.dart';
 import '/widgets/hud.dart';
@@ -20,7 +22,11 @@ import '/widgets/game_over_menu.dart';
 
 // Game class representing the main game logic
 class WildRun extends FlameGame
-    with TapDetector, HasCollisionDetection, HasGameReference<WildRun> {
+    with
+        TapDetector,
+        HasCollisionDetection,
+        KeyboardEvents,
+        HasGameReference<WildRun> {
   Size sizeScreen;
   WildRun({super.camera, required this.sizeScreen});
 
@@ -148,6 +154,33 @@ class WildRun extends FlameGame
     _elementManager.removeFromParent();
   }
 
+  // check if player has completed a task
+  void checkTask() {
+    TaskInfo task;
+    for (int i = 0; i < tasks.length; i++) {
+      task = tasks[i];
+      switch (task.type) {
+        case TypeTask.run:
+          task.hasDone = (playerData.currentDistance >= task.goal);
+          break;
+        case TypeTask.animal:
+          task.hasDone = (playerData.nbAnimal >= task.goal);
+          break;
+        case TypeTask.enemy:
+          task.hasDone = (playerData.nbAnimal >= task.goal);
+          break;
+        case TypeTask.tree:
+          task.hasDone = (playerData.nbTree >= task.goal);
+          break;
+        case TypeTask.waste:
+          task.hasDone = (playerData.nbWaste >= task.goal);
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   // Method to reset the game
   void reset() {
     _disconnectActors();
@@ -197,6 +230,24 @@ class WildRun extends FlameGame
     }
 
     super.onTapDown(info);
+  }
+
+  @override
+  KeyEventResult onKeyEvent(
+    KeyEvent event,
+    Set<LogicalKeyboardKey> keysPressed,
+  ) {
+    if (event is KeyDownEvent) {
+      if (((event.logicalKey == LogicalKeyboardKey.arrowUp) ||
+              (event.logicalKey == LogicalKeyboardKey.keyW)) &&
+          !_player.isFly) {
+        _player.jump();
+      }
+      if (event.logicalKey == LogicalKeyboardKey.keyQ) {
+        _player.attack();
+      }
+    }
+    return KeyEventResult.handled;
   }
 
   // Method to read player data from local storage

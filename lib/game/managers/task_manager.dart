@@ -19,7 +19,7 @@ class TaskInfo {
   final Color color;
 
   get desc => "$act $goal $target";
-  bool _hasDone = true;
+  bool _hasDone = false;
   get hasDone => _hasDone;
   set hasDone(value) {
     _hasDone = value;

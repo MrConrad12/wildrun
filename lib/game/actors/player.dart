@@ -228,7 +228,9 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   }
 
   void getSeed() {
-    playerData.seed += 1;
+    if (playerData.seed < 3) {
+      playerData.seed += 1;
+    }
   }
 
   void _reset() {
