@@ -74,7 +74,6 @@ class PauseMenu extends StatelessWidget {
                         game.resumeEngine();
                         game.reset();
                         game.startGamePlay();
-                        AudioManager.instance.resumeBgm();
                       },
                       child: const Text(
                         'Restart',
@@ -89,7 +88,8 @@ class PauseMenu extends StatelessWidget {
                         game.overlays.add(MainMenu.id);
                         game.resumeEngine();
                         game.reset();
-                        AudioManager.instance.resumeBgm();
+                        AudioManager.instance.stopBgm();
+                        AudioManager.instance.startBgm('homeBgm.wav');
                       },
                       child: const Text(
                         'Exit',

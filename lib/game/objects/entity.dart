@@ -5,6 +5,7 @@ import 'package:wildrun/game/managers/mapping.dart';
 import 'package:flame/effects.dart';
 import '../actors/player.dart';
 import '../wildrun.dart';
+import 'tree.dart';
 
 class Entity extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameReference<WildRun> {
@@ -123,6 +124,16 @@ class Entity extends SpriteAnimationComponent
           removeFromParent();
         }
         // add song effect
+        break;
+      case TypeBlock.arrowTree:
+        if (other is Player && other.playerData.seed > 0) {
+          game.playerData.currentScore += bonusScore;
+          game.world.add(Tree(
+              typeBlock: TypeBlock.tree,
+              sizeElement: Vector2.all(42),
+              positionSpawn: position));
+          removeFromParent();
+        }
         break;
       default:
         break;

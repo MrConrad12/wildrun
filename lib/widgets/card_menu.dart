@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
+import '../game/managers/card_manager.dart';
 import '/game/wildrun.dart';
 import 'main_menu.dart';
-import 'card_game.dart';
+import 'card/card_game.dart';
 
 // This represents the cards menu overlay.
 class CardMenu extends StatelessWidget {
@@ -36,17 +36,6 @@ class CardMenu extends StatelessWidget {
     );
   }
 }
-
-List<Map<String, String>> cards = [
-  {"name": "Tâche 1", "asset": "assets/images/cards/bird1.jpg"},
-  {"name": "Tâche 2", "asset": "assets/images/cards/bird2.jpg"},
-  {"name": "Tâche 3", "asset": "assets/images/cards/hog1.jpg"},
-  {"name": "Tâche 4", "asset": "assets/images/cards/hog2.jpg"},
-  {"name": "Tâche 4", "asset": "assets/images/cards/run1.jpg"},
-  {"name": "Tâche 4", "asset": "assets/images/cards/run2.jpg"},
-  {"name": "Tâche 4", "asset": "assets/images/cards/run4.jpg"},
-  {"name": "Tâche 4", "asset": "assets/images/cards/wolf1.jpg"},
-]; // Ajoutez vos tâches ici
 
 class CardView extends StatefulWidget {
   final WildRun game;

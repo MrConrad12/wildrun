@@ -8,7 +8,7 @@ enum PlayerAnimationStates {
   walk,
   run,
   hit,
-  attack,
+  plant,
   death,
   jump,
   fly,
@@ -39,7 +39,7 @@ final animationMap = {
     textureSize: Vector2.all(32),
     texturePosition: Vector2(32, (6) * 32),
   ),
-  PlayerAnimationStates.attack: SpriteAnimationData.sequenced(
+  PlayerAnimationStates.plant: SpriteAnimationData.sequenced(
     amount: 8,
     stepTime: 0.1,
     textureSize: Vector2.all(32),

@@ -68,7 +68,6 @@ class GameOverMenu extends StatelessWidget {
                         game.resumeEngine();
                         game.reset();
                         game.startGamePlay();
-                        AudioManager.instance.resumeBgm();
                       },
                     ),
                     ElevatedButton(
@@ -83,7 +82,8 @@ class GameOverMenu extends StatelessWidget {
                         game.overlays.add(MainMenu.id);
                         game.resumeEngine();
                         game.reset();
-                        AudioManager.instance.resumeBgm();
+                        AudioManager.instance.stopBgm();
+                        AudioManager.instance.startBgm('homeBgm.wav');
                       },
                     ),
                   ],

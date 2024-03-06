@@ -39,23 +39,49 @@ class WildRun extends FlameGame
     'enemies/radioactivity.png',
     'items/Apple.png',
     'items/seed.png',
+    'items/arrowTree.png',
     'animals/bird.png',
     'animals/squirel.png',
     'animals/wolf.png',
     'effects/attack.png',
+    'landscape/tree0.png',
+    'landscape/tree1.png',
+    'landscape/tree2.png',
+    'landscape/tree3.png',
     'landscape/waste.png',
     'landscape/ground.png',
     'landscape/spiked.png',
     'landscape/spikedPlatform.png',
     'landscape/void.png',
     'landscape/platform_center.png',
+    'cards/animal1.jpg',
+    'cards/animal2.jpg',
+    'cards/bird1.jpg',
+    'cards/bird2.jpg',
+    'cards/CO2.jpg',
+    'cards/hog2.jpg',
+    'cards/hog1.jpg',
+    'cards/run2.jpg',
+    'cards/runner1.jpg',
+    'cards/runner2.jpg',
+    'cards/tree2.jpg',
+    'cards/waste1.jpg',
+    'cards/waste2.jpg',
     'cards/wolf1.jpg',
+    'cards/wolf5.jpg',
+    'cards/wolf4.jpg',
   ];
   // Asset paths for audio files
   static const _audioAssets = [
     '8BitPlatformerLoop.wav',
     'hurt7.wav',
     'jump14.wav',
+    'animal.wav',
+    'gameBgm.wav',
+    'homeBgm',
+    'seed.wav',
+    'Selection.wav',
+    'waste.wav',
   ];
 
   double objectSpeed = 90;
@@ -68,6 +94,8 @@ class WildRun extends FlameGame
   late double lastBlockXPosition = 0.0;
   late UniqueKey lastBlockKey;
 
+  bool _actorInitialized = false;
+  get actorInitialized => _actorInitialized;
   Player get player => _player;
   Vector2 get virtualSize => camera.viewport.virtualSize;
 
@@ -84,7 +112,7 @@ class WildRun extends FlameGame
 
     // load song
     await AudioManager.instance.init(_audioAssets, settings);
-    AudioManager.instance.startBgm('8BitPlatformerLoop.wav');
+    AudioManager.instance.startBgm('homeBgm.wav');
 
     // load images and configure camera
     await images.loadAll(_imageAssets);
@@ -99,16 +127,18 @@ class WildRun extends FlameGame
     camera.backdrop.add(parallaxBackground);
   }
 
-  // Method to start the gameplay
   void startGamePlay() {
     _elementManager = ElementManager(gameRef: game);
     _elementManager.initializeElements();
+    AudioManager.instance.stopBgm();
+    AudioManager.instance.startBgm('gameBgm.wav');
 
     _player =
         Player(images.fromCache('players/player1/player.png'), playerData);
 
     world.add(_player);
     world.add(_elementManager);
+    _actorInitialized = true;
   }
 
   // Method to disconnect actors and reset game state
@@ -122,8 +152,10 @@ class WildRun extends FlameGame
   void reset() {
     _disconnectActors();
     playerData.currentScore = 0;
+    playerData.currentDistance = 0;
     playerData.lives = 5;
     playerData.attack = 5;
+    playerData.seed = 0;
     playerData.nbWaste = 0;
     playerData.nbAnimal = 0;
     playerData.nbTree = 0;

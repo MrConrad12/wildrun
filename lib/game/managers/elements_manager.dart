@@ -56,6 +56,20 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 bonusScore: 0),
           );
           break;
+        case TypeBlock.arrowTree:
+          gameRef.world.add(
+            Entity(
+                typeBlock: TypeBlock.arrowTree,
+                urlImg: 'items/arrowTree.png',
+                sizeElement: Vector2(16, 16),
+                gridPosition: block.gridPosition,
+                xOffset: xPositionOffset,
+                spriteSize: Vector2(18, 18),
+                spriteTime: .1,
+                nbFrame: 10,
+                bonusScore: 0),
+          );
+          break;
         case TypeBlock.wolf:
           gameRef.world.add(
             Entity(

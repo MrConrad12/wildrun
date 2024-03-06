@@ -54,10 +54,9 @@ class SettingsMenu extends StatelessWidget {
                             Provider.of<Settings>(context, listen: false).bgm =
                                 value;
                             if (value) {
-                              AudioManager.instance
-                                  .startBgm('8BitPlatformerLoop.wav');
+                              AudioManager.instance.resumeBgm();
                             } else {
-                              AudioManager.instance.stopBgm();
+                              AudioManager.instance.pauseBgm();
                             }
                           },
                           activeColor: const Color.fromARGB(255, 0, 191, 99),

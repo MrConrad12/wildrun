@@ -1,26 +1,19 @@
-import 'package:flame/components.dart';
-import '../wildrun.dart';
-
-class CardGame {
+class CardInfo {
   final String name;
   final String desc;
-  final Map<TypeTask, int> conditions;
   final String urlImage;
-  CardGame(
+  final Map<TypeTask, int> conditions;
+
+  CardInfo(
       {required this.urlImage,
       required this.name,
       required this.desc,
       required this.conditions});
 
-  bool get complete {
-    bool completed = true;
-    conditions.forEach((key, value) {
-      /*
-      if (player.data.key < value) {
-        completed = false;
-      }*/
-    });
-    return completed;
+  bool _hasDone = false;
+  get hasDone => _hasDone;
+  set hasDone(value) {
+    _hasDone = value;
   }
 }
 
@@ -32,64 +25,123 @@ enum TypeTask {
   enemy,
 }
 
-class CardManager extends Component with HasGameReference<WildRun> {
-// list of all cards with there data
-  List<CardGame> cards = [
-    CardGame(
-        name: "Planteur expert",
-        desc: "Vous etes un vrai planteur",
-        urlImage: '',
-        conditions: {
-          TypeTask.run: 10000,
-          TypeTask.animal: 50,
-          TypeTask.plant: 500,
-          TypeTask.waste: 10,
-          TypeTask.enemy: 5,
-        }),
-    CardGame(
-        name: "Coureur de la nature",
-        desc: "Some description",
-        urlImage: '',
-        conditions: {
-          TypeTask.run: 100000,
-          TypeTask.animal: 600,
-          TypeTask.plant: 500,
-          TypeTask.waste: 0,
-          TypeTask.enemy: 0,
-        }),
-    CardGame(
-        name: "Echecs",
-        desc: "Some description",
-        urlImage: '',
-        conditions: {
-          TypeTask.run: 1000,
-          TypeTask.animal: 600,
-          TypeTask.plant: 500,
-          TypeTask.waste: 0,
-          TypeTask.enemy: 0,
-        }),
-    CardGame(
-        name: "Echecs",
-        desc: "Some description",
-        urlImage: '',
-        conditions: {
-          TypeTask.run: 1000,
-          TypeTask.animal: 600,
-          TypeTask.plant: 500,
-          TypeTask.waste: 0,
-          TypeTask.enemy: 0,
-        }),
-    CardGame(
-      name: "Echecs",
+List<CardInfo> cards = [
+  CardInfo(
+      name: "Coureur de la nature",
       desc: "Some description",
-      urlImage: '',
+      urlImage: 'images/cards/animal2.jpg',
       conditions: {
-        TypeTask.run: 1000,
-        TypeTask.animal: 600,
-        TypeTask.plant: 500,
+        TypeTask.run: 0,
+        TypeTask.animal: 0,
+        TypeTask.plant: 0,
         TypeTask.waste: 0,
         TypeTask.enemy: 0,
-      },
-    ),
-  ];
-}
+      }),
+  CardInfo(
+      name: "Echecs",
+      desc: "Some description",
+      urlImage: 'images/cards/bird2.jpg',
+      conditions: {
+        TypeTask.run: 0,
+        TypeTask.animal: 0,
+        TypeTask.plant: 0,
+        TypeTask.waste: 0,
+        TypeTask.enemy: 0,
+      }),
+  CardInfo(
+    name: "Echecs",
+    desc: "Some description",
+    urlImage: 'images/cards/CO2.jpg',
+    conditions: {
+      TypeTask.run: 0,
+      TypeTask.animal: 0,
+      TypeTask.plant: 0,
+      TypeTask.waste: 0,
+      TypeTask.enemy: 0,
+    },
+  ),
+  CardInfo(
+    name: "Echecs",
+    desc: "Some description",
+    urlImage: 'images/cards/hog2.jpg',
+    conditions: {
+      TypeTask.run: 0,
+      TypeTask.animal: 0,
+      TypeTask.plant: 0,
+      TypeTask.waste: 0,
+      TypeTask.enemy: 0,
+    },
+  ),
+  CardInfo(
+    name: "Echecs",
+    desc: "Some description",
+    urlImage: 'images/cards/runner2.jpg',
+    conditions: {
+      TypeTask.run: 0,
+      TypeTask.animal: 0,
+      TypeTask.plant: 0,
+      TypeTask.waste: 0,
+      TypeTask.enemy: 0,
+    },
+  ),
+  CardInfo(
+    name: "Echecs",
+    desc: "Some description",
+    urlImage: 'images/cards/tree2.jpg',
+    conditions: {
+      TypeTask.run: 0,
+      TypeTask.animal: 0,
+      TypeTask.plant: 0,
+      TypeTask.waste: 0,
+      TypeTask.enemy: 0,
+    },
+  ),
+  CardInfo(
+    name: "Echecs",
+    desc: "Some description",
+    urlImage: 'images/cards/waste1.jpg',
+    conditions: {
+      TypeTask.run: 0,
+      TypeTask.animal: 0,
+      TypeTask.plant: 0,
+      TypeTask.waste: 0,
+      TypeTask.enemy: 0,
+    },
+  ),
+  CardInfo(
+    name: "Echecs",
+    desc: "Some description",
+    urlImage: 'images/cards/waste2.jpg',
+    conditions: {
+      TypeTask.run: 0,
+      TypeTask.animal: 0,
+      TypeTask.plant: 0,
+      TypeTask.waste: 0,
+      TypeTask.enemy: 0,
+    },
+  ),
+  CardInfo(
+    name: "Echecs",
+    desc: "Some description",
+    urlImage: 'images/cards/wolf1.jpg',
+    conditions: {
+      TypeTask.run: 0,
+      TypeTask.animal: 0,
+      TypeTask.plant: 0,
+      TypeTask.waste: 0,
+      TypeTask.enemy: 0,
+    },
+  ),
+  CardInfo(
+    name: "Echecs",
+    desc: "Some description",
+    urlImage: 'images/cards/wolf4.jpg',
+    conditions: {
+      TypeTask.run: 0,
+      TypeTask.animal: 0,
+      TypeTask.plant: 0,
+      TypeTask.waste: 0,
+      TypeTask.enemy: 0,
+    },
+  ),
+];

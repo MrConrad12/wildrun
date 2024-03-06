@@ -49,90 +49,94 @@ class Hud extends StatelessWidget {
                     );
                   },
                 ),
-                Selector<PlayerData, int>(
-                  selector: (_, playerData) => playerData.nbEnemy,
-                  builder: (_, enemy, __) {
-                    return Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.bug_report_rounded,
-                            size: iconSize,
-                            color: Colors.white,
+                Row(
+                  children: [
+                    Selector<PlayerData, int>(
+                      selector: (_, playerData) => playerData.nbEnemy,
+                      builder: (_, enemy, __) {
+                        return Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.bug_report_rounded,
+                                size: iconSize,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                ' $enemy',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                          Text(
-                            ' $enemy',
-                            style: const TextStyle(color: Colors.white),
+                        );
+                      },
+                    ),
+                    Selector<PlayerData, int>(
+                      selector: (_, playerData) => playerData.nbTree,
+                      builder: (_, tree, __) {
+                        return Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.grass,
+                                size: iconSize,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                ' $tree',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                Selector<PlayerData, int>(
-                  selector: (_, playerData) => playerData.nbTree,
-                  builder: (_, tree, __) {
-                    return Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.grass,
-                            size: iconSize,
-                            color: Colors.white,
+                        );
+                      },
+                    ),
+                    Selector<PlayerData, int>(
+                      selector: (_, playerData) => playerData.nbAnimal,
+                      builder: (_, animal, __) {
+                        return Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.pets,
+                                size: iconSize,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                ' $animal',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                          Text(
-                            ' $tree',
-                            style: const TextStyle(color: Colors.white),
+                        );
+                      },
+                    ),
+                    Selector<PlayerData, int>(
+                      selector: (_, playerData) => playerData.nbWaste,
+                      builder: (_, waste, __) {
+                        return Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.recycling_rounded,
+                                size: iconSize,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                ' $waste',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                Selector<PlayerData, int>(
-                  selector: (_, playerData) => playerData.nbAnimal,
-                  builder: (_, animal, __) {
-                    return Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.pets,
-                            size: iconSize,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            ' $animal',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                Selector<PlayerData, int>(
-                  selector: (_, playerData) => playerData.nbWaste,
-                  builder: (_, waste, __) {
-                    return Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.recycling_rounded,
-                            size: iconSize,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            ' $waste',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                        );
+                      },
+                    ),
+                  ],
+                )
               ],
             ),
             TextButton(
@@ -145,6 +149,7 @@ class Hud extends StatelessWidget {
               child: const Icon(Icons.pause, color: Colors.white),
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Selector<PlayerData, int>(
                   selector: (_, playerData) => playerData.lives,
@@ -179,6 +184,26 @@ class Hud extends StatelessWidget {
                         } else {
                           return const Icon(
                             Icons.cyclone_rounded,
+                            color: Color.fromARGB(255, 168, 168, 168),
+                          );
+                        }
+                      }),
+                    );
+                  },
+                ),
+                Selector<PlayerData, int>(
+                  selector: (_, playerData) => playerData.seed,
+                  builder: (_, seed, __) {
+                    return Row(
+                      children: List.generate(3, (index) {
+                        if (index < seed) {
+                          return const Icon(
+                            Icons.auto_awesome_rounded,
+                            color: Color.fromARGB(255, 255, 182, 23),
+                          );
+                        } else {
+                          return const Icon(
+                            Icons.auto_awesome_rounded,
                             color: Color.fromARGB(255, 168, 168, 168),
                           );
                         }

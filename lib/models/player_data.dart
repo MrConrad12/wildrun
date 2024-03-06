@@ -6,7 +6,6 @@ part 'player_data.g.dart';
 @HiveType(typeId: 0)
 class PlayerData extends ChangeNotifier with HiveObjectMixin {
   int _lives = 5;
-
   int get lives => _lives;
   set lives(int value) {
     if (value <= 5 && value >= 0) {
@@ -16,11 +15,19 @@ class PlayerData extends ChangeNotifier with HiveObjectMixin {
   }
 
   int _attack = 5;
-
   int get attack => _attack;
   set attack(int value) {
     if (value <= 5 && value >= 0) {
       _attack = value;
+      notifyListeners();
+    }
+  }
+
+  int _seed = 0;
+  int get seed => _seed;
+  set seed(int value) {
+    if (value <= 5 && value >= 0) {
+      _seed = value;
       notifyListeners();
     }
   }

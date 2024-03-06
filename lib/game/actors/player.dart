@@ -41,6 +41,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   bool isRecharge = false;
   bool isAttack = false;
   bool isFly = false;
+  bool canPlant = false;
 
   Player(Image image, this.playerData)
       : super.fromFrameData(image, animationMap);
@@ -87,12 +88,13 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
       if ((current != PlayerAnimationStates.hit) &&
           (current != PlayerAnimationStates.fly) &&
           (current != PlayerAnimationStates.run) &&
-          (current != PlayerAnimationStates.attack)) {
+          (current != PlayerAnimationStates.plant)) {
         current = PlayerAnimationStates.run;
       }
     }
     touchPlatform = false;
-    // update all timers
+    canPlant = false;
+
     _effectTimer.update(dt);
     _flyTimer.update(dt);
 
@@ -144,11 +146,27 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
           if (!isHeal) {
             heal();
           }
+          break;
         case TypeBlock.waste:
           regeneAttack();
+          break;
+        case TypeBlock.seed:
+          getSeed();
+          break;
+        case TypeBlock.arrowTree:
+          plantTree();
+          break;
         default:
           break;
       }
+    }
+  }
+
+  void plantTree() {
+    if (playerData.seed > 0) {
+      current = PlayerAnimationStates.plant;
+      _effectTimer.start();
+      playerData.seed -= 1;
     }
   }
 
@@ -209,6 +227,10 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     _effectTimer.start();
   }
 
+  void getSeed() {
+    playerData.seed += 1;
+  }
+
   void _reset() {
     if (isMounted) {
       removeFromParent();
@@ -223,6 +245,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     isAttack = false;
     isJump = false;
     isFly = false;
+    canPlant = false;
     hasJumped = false;
     touchPlatform = false;
     speedY = 0.0;

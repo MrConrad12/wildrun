@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import '/widgets/card_menu.dart';
+import 'card_menu.dart';
 import '/widgets/hud.dart';
 import '/game/wildrun.dart';
 import '/widgets/settings_menu.dart';
@@ -61,7 +63,13 @@ class MainMenu extends StatelessWidget {
                           icon: const Icon(Icons.settings)),
                       IconButton(
                           tooltip: 'Exit',
-                          onPressed: () {},
+                          onPressed: () {
+                            if (Platform.isAndroid) {
+                              SystemNavigator.pop();
+                            } else if (Platform.isIOS) {
+                              exit(0);
+                            }
+                          },
                           icon: const Icon(Icons.cancel_outlined)),
                     ],
                   ),
@@ -70,17 +78,18 @@ class MainMenu extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   ElevatedButton(
-                      onPressed: () {
-                        game.startGamePlay();
-                        game.overlays.remove(MainMenu.id);
-                        game.overlays.add(Hud.id);
-                      },
-                      child: const Text(
-                        'Play',
-                        style: TextStyle(
-                          fontSize: 30,
-                        ),
-                      )),
+                    onPressed: () {
+                      game.startGamePlay();
+                      game.overlays.remove(MainMenu.id);
+                      game.overlays.add(Hud.id);
+                    },
+                    child: const Text(
+                      'Play',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
