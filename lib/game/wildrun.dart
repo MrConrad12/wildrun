@@ -8,7 +8,9 @@ import 'package:hive/hive.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/components.dart';
+import 'package:wildrun/models/task_data.dart';
 
+import '../models/card_data.dart';
 import 'actors/player.dart';
 import '/widgets/hud.dart';
 import '/models/settings.dart';
@@ -88,6 +90,8 @@ class WildRun extends FlameGame
   late Player _player;
   late Settings settings;
   late PlayerData playerData;
+  late TaskData taskData;
+  late CardData cardData;
   late ElementManager _elementManager;
   double timer = .0;
   get elementManager => _elementManager;
@@ -109,6 +113,8 @@ class WildRun extends FlameGame
     // load data
     playerData = await _readPlayerData();
     settings = await _readSettings();
+    cardData = await _readCardData();
+    taskData = await _readTaskData();
 
     // load song
     await AudioManager.instance.init(_audioAssets, settings);
@@ -199,18 +205,6 @@ class WildRun extends FlameGame
     super.onTapDown(info);
   }
 
-  // Method to read player data from local storage
-  Future<PlayerData> _readPlayerData() async {
-    final playerDataBox =
-        await Hive.openBox<PlayerData>('WildRun.PlayerDataBox');
-    final playerData = playerDataBox.get('WildRun.PlayerData');
-
-    if (playerData == null) {
-      await playerDataBox.put('WildRun.PlayerData', PlayerData());
-    }
-    return playerDataBox.get('WildRun.PlayerData')!;
-  }
-
   // Method to read settings from local storage
   Future<Settings> _readSettings() async {
     final settingsBox = await Hive.openBox<Settings>('WildRun.SettingsBox');
@@ -223,6 +217,49 @@ class WildRun extends FlameGame
       );
     }
     return settingsBox.get('WildRun.Settings')!;
+  }
+
+  // Method to read player data from local storage
+  Future<PlayerData> _readPlayerData() async {
+    final playerDataBox =
+        await Hive.openBox<PlayerData>('WildRun.PlayerDataBox');
+    final playerData = playerDataBox.get('WildRun.PlayerData');
+
+    if (playerData == null) {
+      await playerDataBox.put(
+        'WildRun.PlayerData',
+        PlayerData(),
+      );
+    }
+    return playerDataBox.get('WildRun.PlayerData')!;
+  }
+
+  // Method to read card data from local storage
+  Future<CardData> _readCardData() async {
+    final cardDataBox = await Hive.openBox<CardData>('WildRun.CardDataBox');
+    final cardData = cardDataBox.get('WildRun.CardData');
+
+    if (cardDataBox == null) {
+      await cardDataBox.put(
+        'WildRun.CardData',
+        CardData(),
+      );
+    }
+    return cardDataBox.get('WildRun.CardData')!;
+  }
+
+  // Method to read player data from local storage
+  Future<TaskData> _readTaskData() async {
+    final taskDataBox = await Hive.openBox<TaskData>('WildRun.TaskDataBox');
+    final taskData = taskDataBox.get('WildRun.TaskData');
+
+    if (playerData == null) {
+      await taskDataBox.put(
+        'WildRun.TaskData',
+        TaskData(),
+      );
+    }
+    return taskDataBox.get('WildRun.TaskData')!;
   }
 
   // Method to handle lifecycle state changes of the application
