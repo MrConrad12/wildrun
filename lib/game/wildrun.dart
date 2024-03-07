@@ -10,7 +10,9 @@ import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/components.dart';
 import 'package:wildrun/game/managers/task_manager.dart';
+import 'package:wildrun/models/task_data.dart';
 
+//import '../models/card_data.dart';
 import 'actors/player.dart';
 import '/widgets/hud.dart';
 import '/models/settings.dart';
@@ -57,7 +59,6 @@ class WildRun extends FlameGame
     'landscape/waste.png',
     'landscape/ground.png',
     'landscape/spiked.png',
-    'landscape/spikedPlatform.png',
     'landscape/void.png',
     'landscape/platform_center.png',
     'cards/animal1.jpg',
@@ -90,10 +91,12 @@ class WildRun extends FlameGame
     'waste.wav',
   ];
 
-  double objectSpeed = 90;
+  double objectSpeed = 110;
   late Player _player;
   late Settings settings;
   late PlayerData playerData;
+  late TaskData taskData;
+  //late CardData cardData;
   late ElementManager _elementManager;
   double timer = .0;
   get elementManager => _elementManager;
@@ -115,6 +118,8 @@ class WildRun extends FlameGame
     // load data
     playerData = await _readPlayerData();
     settings = await _readSettings();
+    //cardData = await _readCardData();
+    taskData = await _readTaskData();
 
     // load song
     await AudioManager.instance.init(_audioAssets, settings);
@@ -133,7 +138,7 @@ class WildRun extends FlameGame
     camera.backdrop.add(parallaxBackground);
   }
 
-  void startGamePlay() {
+  void startGamePlay() async {
     _elementManager = ElementManager(gameRef: game);
     _elementManager.initializeElements();
     AudioManager.instance.stopBgm();
@@ -142,8 +147,8 @@ class WildRun extends FlameGame
     _player =
         Player(images.fromCache('players/player1/player.png'), playerData);
 
-    world.add(_player);
-    world.add(_elementManager);
+    await world.add(_player);
+    await world.add(_elementManager);
     _actorInitialized = true;
   }
 
@@ -157,23 +162,34 @@ class WildRun extends FlameGame
   // check if player has completed a task
   void checkTask() {
     TaskInfo task;
+    int nbOfEachTask = 10;
     for (int i = 0; i < tasks.length; i++) {
       task = tasks[i];
       switch (task.type) {
         case TypeTask.run:
-          task.hasDone = (playerData.currentDistance >= task.goal);
+          if (playerData.currentDistance >= task.goal) {
+            taskData.taskCompleted[TypeTask.run] = i % nbOfEachTask;
+          }
           break;
         case TypeTask.animal:
-          task.hasDone = (playerData.nbAnimal >= task.goal);
+          if (playerData.nbAnimal >= task.goal) {
+            taskData.taskCompleted[TypeTask.animal] = i % nbOfEachTask;
+          }
           break;
         case TypeTask.enemy:
-          task.hasDone = (playerData.nbAnimal >= task.goal);
+          if (playerData.nbAnimal >= task.goal) {
+            taskData.taskCompleted[TypeTask.enemy] = i % nbOfEachTask;
+          }
           break;
         case TypeTask.tree:
-          task.hasDone = (playerData.nbTree >= task.goal);
+          if (playerData.nbTree >= task.goal) {
+            taskData.taskCompleted[TypeTask.tree] = i % nbOfEachTask;
+          }
           break;
         case TypeTask.waste:
-          task.hasDone = (playerData.nbWaste >= task.goal);
+          if (playerData.nbWaste >= task.goal) {
+            taskData.taskCompleted[TypeTask.waste] = i % nbOfEachTask;
+          }
           break;
         default:
           break;
@@ -183,6 +199,7 @@ class WildRun extends FlameGame
 
   // Method to reset the game
   void reset() {
+    checkTask();
     _disconnectActors();
     playerData.currentScore = 0;
     playerData.currentDistance = 0;
@@ -237,16 +254,16 @@ class WildRun extends FlameGame
     KeyEvent event,
     Set<LogicalKeyboardKey> keysPressed,
   ) {
-    if (event is KeyDownEvent) {
-      if (((event.logicalKey == LogicalKeyboardKey.arrowUp) ||
-              (event.logicalKey == LogicalKeyboardKey.keyW)) &&
-          !_player.isFly) {
-        _player.jump();
-      }
-      if (event.logicalKey == LogicalKeyboardKey.keyQ) {
-        _player.attack();
-      }
+    if ((keysPressed.contains(LogicalKeyboardKey.arrowUp) ||
+            keysPressed.contains(LogicalKeyboardKey.keyW)) &&
+        !_player.isFly) {
+      _player.jump();
     }
+
+    if (keysPressed.contains(LogicalKeyboardKey.keyQ)) {
+      _player.attack();
+    }
+
     return KeyEventResult.handled;
   }
 
@@ -262,6 +279,19 @@ class WildRun extends FlameGame
     return playerDataBox.get('WildRun.PlayerData')!;
   }
 
+  Future<TaskData> _readTaskData() async {
+    final taskDataBox = await Hive.openBox<TaskData>('WildRun.TaskDataBox');
+    final taskData = taskDataBox.get('WildRun.TaskData');
+
+    if (taskData == null) {
+      await taskDataBox.put(
+        'WildRun.TaskData',
+        TaskData(),
+      );
+    }
+    return taskDataBox.get('WildRun.TaskData')!;
+  }
+
   // Method to read settings from local storage
   Future<Settings> _readSettings() async {
     final settingsBox = await Hive.openBox<Settings>('WildRun.SettingsBox');
@@ -275,6 +305,23 @@ class WildRun extends FlameGame
     }
     return settingsBox.get('WildRun.Settings')!;
   }
+
+/*
+  // Method to read card data from local storage
+  Future<CardData> _readCardData() async {
+    final cardDataBox = await Hive.openBox<CardData>('WildRun.CardDataBox');
+    final cardData = cardDataBox.get('WildRun.CardData');
+
+    if (cardDataBox == null) {
+      await cardDataBox.put(
+        'WildRun.CardData',
+        CardData(),
+      );
+    }
+    return cardDataBox.get('WildRun.CardData')!;
+  }
+*/
+  // Method to read player data from local storage
 
   // Method to handle lifecycle state changes of the application
   @override

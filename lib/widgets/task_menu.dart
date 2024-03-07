@@ -69,7 +69,7 @@ class _TaskViewState extends State<TaskView> {
             children: [
               const Expanded(
                 child: Text(
-                  "tasks : 1/10",
+                  "tasks",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -92,7 +92,8 @@ class _TaskViewState extends State<TaskView> {
             child: AnimatedList(
               initialItemCount: tasks.length,
               itemBuilder: (context, index, animation) => TaskGame(
-                taskData: tasks[index],
+                taskInfo: tasks[index],
+                game: widget.game,
               ),
             ),
           ),

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:wildrun/game/managers/card_manager.dart';
 
 class CardGame extends StatelessWidget {
@@ -8,7 +10,7 @@ class CardGame extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return SizedBox(
-      width: screenSize.height * .7 * 2 / 3,
+      width: screenSize.height * .7 * 3 / 2,
       height: screenSize.height * .7,
       child: Card(
         elevation: 12,
@@ -16,16 +18,19 @@ class CardGame extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           child: Column(
             children: [
-              Image.asset(
-                cardData.urlImage,
-                fit: BoxFit.fitWidth,
+              SizedBox(
+                height: screenSize.height * .5,
+                child: Image.asset(
+                  cardData.urlImage,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
               const SizedBox(
                 height: 4,
               ),
               Text(
                 cardData.name,
-                style: TextStyle(fontSize: screenSize.width * 0.03),
+                style: TextStyle(fontSize: screenSize.height * 0.05),
               ),
               Expanded(
                 child: Padding(

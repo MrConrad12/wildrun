@@ -65,8 +65,8 @@ class GameOverMenu extends StatelessWidget {
                       onPressed: () {
                         game.overlays.remove(GameOverMenu.id);
                         game.overlays.add(Hud.id);
-                        game.resumeEngine();
                         game.reset();
+                        game.resumeEngine();
                         game.startGamePlay();
                       },
                     ),
@@ -80,7 +80,6 @@ class GameOverMenu extends StatelessWidget {
                       onPressed: () {
                         game.overlays.remove(GameOverMenu.id);
                         game.overlays.add(MainMenu.id);
-                        game.resumeEngine();
                         game.reset();
                         AudioManager.instance.stopBgm();
                         AudioManager.instance.startBgm('homeBgm.wav');

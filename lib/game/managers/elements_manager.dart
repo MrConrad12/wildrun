@@ -13,8 +13,11 @@ class ElementManager extends Component with HasGameReference<WildRun> {
   ElementManager({required this.gameRef});
 
   void initializeElements() {
+    gameRef.lastBlockXPosition = 0.0;
+
     segmentsToLoad = (gameRef.size.x / 320).ceil();
     segmentsToLoad.clamp(0, segments.length);
+
     for (var i = 0; i <= segmentsToLoad; i++) {
       loadGameRefSegments(i, (320 * i).toDouble());
     }
@@ -82,6 +85,20 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 spriteTime: .5,
                 nbFrame: 4,
                 bonusScore: 30),
+          );
+          break;
+        case TypeBlock.squirel:
+          gameRef.world.add(
+            Entity(
+                typeBlock: TypeBlock.wolf,
+                urlImg: 'animals/squirel.png',
+                sizeElement: Vector2.all(20),
+                gridPosition: block.gridPosition,
+                xOffset: xPositionOffset,
+                spriteSize: Vector2.all(32),
+                spriteTime: .5,
+                nbFrame: 6,
+                bonusScore: 40),
           );
           break;
         case TypeBlock.bird:

@@ -2,7 +2,7 @@ class CardInfo {
   final String name;
   final String desc;
   final String urlImage;
-  final Map<TypeTask, int> conditions;
+  final Map<TypeCard, int> conditions;
 
   CardInfo(
       {required this.urlImage,
@@ -17,7 +17,7 @@ class CardInfo {
   }
 }
 
-enum TypeTask {
+enum TypeCard {
   run,
   animal,
   plant,
@@ -31,33 +31,33 @@ List<CardInfo> cards = [
       desc: "Some description",
       urlImage: 'images/cards/animal2.jpg',
       conditions: {
-        TypeTask.run: 0,
-        TypeTask.animal: 0,
-        TypeTask.plant: 0,
-        TypeTask.waste: 0,
-        TypeTask.enemy: 0,
+        TypeCard.run: 0,
+        TypeCard.animal: 0,
+        TypeCard.plant: 0,
+        TypeCard.waste: 0,
+        TypeCard.enemy: 0,
       }),
   CardInfo(
       name: "Echecs",
       desc: "Some description",
       urlImage: 'images/cards/bird2.jpg',
       conditions: {
-        TypeTask.run: 0,
-        TypeTask.animal: 0,
-        TypeTask.plant: 0,
-        TypeTask.waste: 0,
-        TypeTask.enemy: 0,
+        TypeCard.run: 0,
+        TypeCard.animal: 0,
+        TypeCard.plant: 0,
+        TypeCard.waste: 0,
+        TypeCard.enemy: 0,
       }),
   CardInfo(
     name: "Echecs",
     desc: "Some description",
     urlImage: 'images/cards/CO2.jpg',
     conditions: {
-      TypeTask.run: 0,
-      TypeTask.animal: 0,
-      TypeTask.plant: 0,
-      TypeTask.waste: 0,
-      TypeTask.enemy: 0,
+      TypeCard.run: 0,
+      TypeCard.animal: 0,
+      TypeCard.plant: 0,
+      TypeCard.waste: 0,
+      TypeCard.enemy: 0,
     },
   ),
   CardInfo(
@@ -65,11 +65,11 @@ List<CardInfo> cards = [
     desc: "Some description",
     urlImage: 'images/cards/hog2.jpg',
     conditions: {
-      TypeTask.run: 0,
-      TypeTask.animal: 0,
-      TypeTask.plant: 0,
-      TypeTask.waste: 0,
-      TypeTask.enemy: 0,
+      TypeCard.run: 0,
+      TypeCard.animal: 0,
+      TypeCard.plant: 0,
+      TypeCard.waste: 0,
+      TypeCard.enemy: 0,
     },
   ),
   CardInfo(
@@ -77,11 +77,11 @@ List<CardInfo> cards = [
     desc: "Some description",
     urlImage: 'images/cards/runner2.jpg',
     conditions: {
-      TypeTask.run: 0,
-      TypeTask.animal: 0,
-      TypeTask.plant: 0,
-      TypeTask.waste: 0,
-      TypeTask.enemy: 0,
+      TypeCard.run: 0,
+      TypeCard.animal: 0,
+      TypeCard.plant: 0,
+      TypeCard.waste: 0,
+      TypeCard.enemy: 0,
     },
   ),
   CardInfo(
@@ -89,11 +89,11 @@ List<CardInfo> cards = [
     desc: "Some description",
     urlImage: 'images/cards/tree2.jpg',
     conditions: {
-      TypeTask.run: 0,
-      TypeTask.animal: 0,
-      TypeTask.plant: 0,
-      TypeTask.waste: 0,
-      TypeTask.enemy: 0,
+      TypeCard.run: 0,
+      TypeCard.animal: 0,
+      TypeCard.plant: 0,
+      TypeCard.waste: 0,
+      TypeCard.enemy: 0,
     },
   ),
   CardInfo(
@@ -101,11 +101,11 @@ List<CardInfo> cards = [
     desc: "Some description",
     urlImage: 'images/cards/waste1.jpg',
     conditions: {
-      TypeTask.run: 0,
-      TypeTask.animal: 0,
-      TypeTask.plant: 0,
-      TypeTask.waste: 0,
-      TypeTask.enemy: 0,
+      TypeCard.run: 0,
+      TypeCard.animal: 0,
+      TypeCard.plant: 0,
+      TypeCard.waste: 0,
+      TypeCard.enemy: 0,
     },
   ),
   CardInfo(
@@ -113,11 +113,11 @@ List<CardInfo> cards = [
     desc: "Some description",
     urlImage: 'images/cards/waste2.jpg',
     conditions: {
-      TypeTask.run: 0,
-      TypeTask.animal: 0,
-      TypeTask.plant: 0,
-      TypeTask.waste: 0,
-      TypeTask.enemy: 0,
+      TypeCard.run: 0,
+      TypeCard.animal: 0,
+      TypeCard.plant: 0,
+      TypeCard.waste: 0,
+      TypeCard.enemy: 0,
     },
   ),
   CardInfo(
@@ -125,11 +125,11 @@ List<CardInfo> cards = [
     desc: "Some description",
     urlImage: 'images/cards/wolf1.jpg',
     conditions: {
-      TypeTask.run: 0,
-      TypeTask.animal: 0,
-      TypeTask.plant: 0,
-      TypeTask.waste: 0,
-      TypeTask.enemy: 0,
+      TypeCard.run: 0,
+      TypeCard.animal: 0,
+      TypeCard.plant: 0,
+      TypeCard.waste: 0,
+      TypeCard.enemy: 0,
     },
   ),
   CardInfo(
@@ -137,11 +137,11 @@ List<CardInfo> cards = [
     desc: "Some description",
     urlImage: 'images/cards/wolf4.jpg',
     conditions: {
-      TypeTask.run: 0,
-      TypeTask.animal: 0,
-      TypeTask.plant: 0,
-      TypeTask.waste: 0,
-      TypeTask.enemy: 0,
+      TypeCard.run: 0,
+      TypeCard.animal: 0,
+      TypeCard.plant: 0,
+      TypeCard.waste: 0,
+      TypeCard.enemy: 0,
     },
   ),
 ];

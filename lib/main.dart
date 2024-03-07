@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:wildrun/models/task_data.dart';
 import 'package:wildrun/widgets/card_menu.dart';
 import 'package:wildrun/widgets/task_menu.dart';
 
@@ -38,6 +39,7 @@ Future<void> initHive() async {
   Hive.registerAdapter<PlayerData>(PlayerDataAdapter());
   // Register the adapter for the Settings model class
   Hive.registerAdapter<Settings>(SettingsAdapter());
+  Hive.registerAdapter<TaskData>(TaskDataAdapter());
 }
 
 // Main application widget

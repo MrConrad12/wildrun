@@ -109,7 +109,7 @@ List<TaskInfo> tasks = [
         target: 'kilometers ',
         icon: Icons.keyboard_double_arrow_right_rounded,
         type: TypeTask.run,
-        goal: (i + 1) * 2500 + 500 * i),
+        goal: (i + 1) * 2500), //+ 500 * i
   for (int i = 0; i < 10; i++)
     TaskInfo(
         idTask: i,

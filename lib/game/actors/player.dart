@@ -30,7 +30,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
 
   // Timer for various effects
   final Timer _effectTimer = Timer(.5);
-  final Timer _flyTimer = Timer(3);
+  final Timer _flyTimer = Timer(2.5);
   static const double gravity = 710;
   final PlayerData playerData;
 
@@ -130,22 +130,19 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
         case TypeBlock.enemyCO2:
         case TypeBlock.spiked:
         case TypeBlock.enemyRadioactive:
-          if (!isHit) {
-            hit();
-          }
+          hit();
           break;
         case TypeBlock.wolf:
-          playerData.nbAnimal += 1;
+          regeneFullAttack();
+          break;
+        case TypeBlock.squirel:
+          fullSeed();
           break;
         case TypeBlock.bird:
-          if (!isFly) {
-            fly();
-          }
+          fly();
           break;
         case TypeBlock.fruit:
-          if (!isHeal) {
-            heal();
-          }
+          heal();
           break;
         case TypeBlock.waste:
           regeneAttack();
@@ -164,15 +161,26 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
 
   void plantTree() {
     if (playerData.seed > 0) {
+      int bonusTree = 1000;
       current = PlayerAnimationStates.plant;
+      AudioManager.instance.playSfx('Selection.wav');
       _effectTimer.start();
       playerData.seed -= 1;
+      playerData.nbTree += 1;
+      playerData.currentScore += bonusTree;
     }
   }
 
   void regeneAttack() {
+    AudioManager.instance.playSfx('waste.wav');
     playerData.attack += 1;
     playerData.nbWaste += 1;
+  }
+
+  void regeneFullAttack() {
+    AudioManager.instance.playSfx('waste.wav');
+    playerData.attack = 5;
+    playerData.nbAnimal += 1;
   }
 
   void _applyGravity(double dt) {
@@ -180,6 +188,8 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   }
 
   void jump() {
+    AudioManager.instance.playSfx('jump14.wav');
+
     if (isOnGround || touchPlatform) {
       speedY = -250;
       hasJumped = true;
@@ -191,7 +201,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
     isJump = false;
     touchPlatform = false;
     current = PlayerAnimationStates.jump;
-    AudioManager.instance.playSfx('jump14.wav');
   }
 
   void attack() {
@@ -203,31 +212,44 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   }
 
   void hit() {
-    isHit = true;
-    AudioManager.instance.playSfx('hurt7.wav');
-    current = PlayerAnimationStates.hit;
-    playerData.lives -= 1;
-    _effectTimer.start();
+    if (!isHit) {
+      isHit = true;
+      AudioManager.instance.playSfx('hurt7.wav');
+      current = PlayerAnimationStates.hit;
+      playerData.lives -= 1;
+      _effectTimer.start();
+    }
   }
 
   void fly() {
-    isFly = true;
-    speedY = 0;
-    hasJumped = true;
-    playerData.nbAnimal += 1;
-    //AudioManager.instance.playSfx(''); //song for flying
-    current = PlayerAnimationStates.fly;
-    _flyTimer.start();
+    if (!isFly) {
+      isFly = true;
+      speedY = 0;
+      hasJumped = true;
+      playerData.nbAnimal += 1;
+      //AudioManager.instance.playSfx(''); //song for flying
+      current = PlayerAnimationStates.fly;
+      _flyTimer.start();
+    }
   }
 
   void heal() {
-    //AudioManager.instance.playSfx(''); //song for healing
-    isHeal = true;
-    playerData.lives += 1;
+    if (!isHeal) {
+      AudioManager.instance.playSfx('seed.wav'); //song for healing
+      isHeal = true;
+      playerData.lives += 1;
+      _effectTimer.start();
+    }
+  }
+
+  void fullSeed() {
+    AudioManager.instance.playSfx('seed.wav');
+    playerData.seed = 3;
     _effectTimer.start();
   }
 
   void getSeed() {
+    AudioManager.instance.playSfx('seed.wav');
     if (playerData.seed < 3) {
       playerData.seed += 1;
     }

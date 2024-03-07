@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:wildrun/game/wildrun.dart';
 import '../../game/managers/task_manager.dart';
 
 class TaskGame extends StatefulWidget {
-  final TaskInfo taskData;
-  const TaskGame({super.key, required this.taskData});
-
+  final TaskInfo taskInfo;
+  final WildRun game;
+  const TaskGame({
+    super.key,
+    required this.taskInfo,
+    required this.game,
+  });
   @override
   State<TaskGame> createState() => _TaskGameState();
 }
 
 class _TaskGameState extends State<TaskGame> {
+  void checkTask(TaskInfo task) {
+    final int index = task.idTask;
+    final int taskFinish = widget.game.taskData.taskCompleted[task.type]!;
+    task.hasDone = (index <= taskFinish);
+  }
+
   @override
   Widget build(BuildContext context) {
-    TaskInfo data = widget.taskData;
+    TaskInfo data = widget.taskInfo;
+    checkTask(data);
     return Container(
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(

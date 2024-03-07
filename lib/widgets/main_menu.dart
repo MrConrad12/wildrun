@@ -80,6 +80,7 @@ class MainMenu extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       game.startGamePlay();
+                      game.resumeEngine();
                       game.overlays.remove(MainMenu.id);
                       game.overlays.add(Hud.id);
                     },
