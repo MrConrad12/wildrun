@@ -1,18 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:wildrun/widgets/tuto/carousel.dart';
+import 'package:wildrun/widgets/main_menu.dart';
 import '/game/wildrun.dart';
-import 'main_menu.dart';
 
-// This represents the tutos menu overlay.
-class TutoMenu extends StatelessWidget {
-  // An unique identified for this overlay.
-  static const id = 'TutoMenu';
-  // Reference to parent game.
+class InfoMenu extends StatelessWidget {
+  static const id = 'InfoMenu';
   final WildRun game;
 
-  const TutoMenu(this.game, {super.key});
+  const InfoMenu(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +16,7 @@ class TutoMenu extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Padding(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(10),
           child: Card(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -31,7 +27,7 @@ class TutoMenu extends StatelessWidget {
                   children: [
                     const Expanded(
                       child: Text(
-                        "Tutorial",
+                        "Info",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -40,7 +36,7 @@ class TutoMenu extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        game.overlays.remove(TutoMenu.id);
+                        game.overlays.remove(InfoMenu.id);
                         game.overlays.add(MainMenu.id);
                         if (game.actorInitialized) {
                           game.reset();
@@ -50,12 +46,29 @@ class TutoMenu extends StatelessWidget {
                     )
                   ],
                 ),
-                Expanded(child: Carousel(game)),
+                ContentText(text: "About WildRun")
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class ContentText extends StatelessWidget {
+  final String text;
+  const ContentText({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+      ),
+      textAlign: TextAlign.center,
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wildrun/widgets/review_score.dart';
 
 import '/widgets/hud.dart';
 import '/game/wildrun.dart';
@@ -43,18 +44,29 @@ class GameOverMenu extends StatelessWidget {
                   children: [
                     const Text(
                       'Game Over',
-                      style: TextStyle(fontSize: 40, color: Colors.white),
+                      style: TextStyle(fontSize: 50, color: Colors.white),
                     ),
                     Selector<PlayerData, int>(
                       selector: (_, playerData) => playerData.currentScore,
                       builder: (_, score, __) {
                         return Text(
-                          'You Score: $score',
+                          'Score: $score',
                           style: const TextStyle(
-                              fontSize: 40, color: Colors.white),
+                              fontSize: 30, color: Colors.white),
                         );
                       },
                     ),
+                    Selector<PlayerData, int>(
+                      selector: (_, playerData) => playerData.currentDistance,
+                      builder: (_, distance, __) {
+                        return Text(
+                          'Distance: $distance',
+                          style: const TextStyle(
+                              fontSize: 30, color: Colors.white),
+                        );
+                      },
+                    ),
+                    const ReviewScore(),
                     ElevatedButton(
                       child: const Text(
                         'Restart',

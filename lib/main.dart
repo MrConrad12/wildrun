@@ -5,6 +5,8 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wildrun/models/task_data.dart';
+import 'package:wildrun/widgets/info_menu.dart';
+import 'package:wildrun/widgets/stat_menu.dart';
 import 'package:wildrun/widgets/tuto_menu.dart';
 import 'package:wildrun/widgets/task_menu.dart';
 
@@ -92,6 +94,8 @@ class WildRunApp extends StatelessWidget {
             SettingsMenu.id: (_, game) => SettingsMenu(game),
             TutoMenu.id: (_, game) => TutoMenu(game),
             TaskMenu.id: (_, game) => TaskMenu(game),
+            StatMenu.id: (_, game) => StatMenu(game),
+            InfoMenu.id: (_, game) => InfoMenu(game),
           },
           // Initial active overlays for the game
           initialActiveOverlays: const [MainMenu.id],
@@ -105,3 +109,5 @@ class WildRunApp extends StatelessWidget {
     );
   }
 }
+
+class Carousel {}

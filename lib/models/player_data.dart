@@ -59,7 +59,6 @@ class PlayerData extends ChangeNotifier with HiveObjectMixin {
   int get currentDistance => _currentDistance;
   set currentDistance(int value) {
     _currentDistance = value;
-    totalDistance += _currentDistance;
     if (maxDistance < _currentDistance) {
       maxDistance = _currentDistance;
     }
@@ -76,7 +75,6 @@ class PlayerData extends ChangeNotifier with HiveObjectMixin {
   int get nbTree => _nbTree;
   set nbTree(int value) {
     _nbTree = value;
-    totalTree += _nbTree;
     if (maxTree < _nbTree) {
       maxTree = _nbTree;
     }
@@ -93,7 +91,6 @@ class PlayerData extends ChangeNotifier with HiveObjectMixin {
   int get nbAnimal => _nbAnimal;
   set nbAnimal(int value) {
     _nbAnimal = value;
-    totalAnimal += _nbAnimal;
     if (maxAnimal < _nbAnimal) {
       maxAnimal = _nbAnimal;
     }
@@ -110,7 +107,6 @@ class PlayerData extends ChangeNotifier with HiveObjectMixin {
   int get nbWaste => _nbWaste;
   set nbWaste(int value) {
     _nbWaste = value;
-    totalWaste += _nbWaste;
     if (maxWaste < _nbWaste) {
       maxWaste = _nbWaste;
     }
@@ -127,9 +123,16 @@ class PlayerData extends ChangeNotifier with HiveObjectMixin {
   int get nbEnemy => _nbEnemy;
   set nbEnemy(int value) {
     _nbEnemy = value;
-    totalEnemy += _nbEnemy;
     if (maxEnemy < _nbEnemy) {
       maxEnemy = _nbEnemy;
     }
+  }
+
+  void updateTotalData() {
+    totalDistance += _currentDistance;
+    totalEnemy += _nbEnemy;
+    totalWaste += _nbWaste;
+    totalAnimal += _nbAnimal;
+    totalTree += _nbTree;
   }
 }

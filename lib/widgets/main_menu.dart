@@ -2,6 +2,8 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wildrun/widgets/info_menu.dart';
+import 'package:wildrun/widgets/stat_menu.dart';
 
 import 'tuto_menu.dart';
 import '/widgets/hud.dart';
@@ -38,7 +40,10 @@ class MainMenu extends StatelessWidget {
                     children: [
                       IconButton(
                           tooltip: 'view info',
-                          onPressed: () {},
+                          onPressed: () {
+                            game.overlays.remove(MainMenu.id);
+                            game.overlays.add(InfoMenu.id);
+                          },
                           icon: const Icon(Icons.info_outline_rounded)),
                       IconButton(
                           tooltip: 'view tasks',
@@ -48,12 +53,12 @@ class MainMenu extends StatelessWidget {
                           },
                           icon: const Icon(Icons.task_alt)),
                       IconButton(
-                          tooltip: 'view cards',
+                          tooltip: 'View stat',
                           onPressed: () {
                             game.overlays.remove(MainMenu.id);
-                            game.overlays.add(TutoMenu.id);
+                            game.overlays.add(StatMenu.id);
                           },
-                          icon: const Icon(Icons.content_copy_outlined)),
+                          icon: const Icon(Icons.bar_chart_rounded)),
                       IconButton(
                           tooltip: 'go to settings',
                           onPressed: () {
@@ -86,6 +91,18 @@ class MainMenu extends StatelessWidget {
                     },
                     child: const Text(
                       'Play',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      game.overlays.remove(MainMenu.id);
+                      game.overlays.add(TutoMenu.id);
+                    },
+                    child: const Text(
+                      'Tutorial',
                       style: TextStyle(
                         fontSize: 30,
                       ),

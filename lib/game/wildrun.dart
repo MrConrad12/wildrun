@@ -196,6 +196,7 @@ class WildRun extends FlameGame
   void reset() {
     checkTask();
     _disconnectActors();
+    playerData.updateTotalData();
     playerData.currentScore = 0;
     playerData.currentDistance = 0;
     playerData.lives = 5;
@@ -217,11 +218,13 @@ class WildRun extends FlameGame
       pauseEngine();
       AudioManager.instance.pauseBgm();
     }
-    timer += ((objectSpeed * dt)).toInt();
-    if (timer >= 8) {
-      game.playerData.currentDistance += incrementDistance;
-      game.playerData.currentScore += incrementDistance * 2;
-      timer %= 10;
+    if (_actorInitialized) {
+      timer += ((objectSpeed * dt)).toInt();
+      if (timer >= 8) {
+        game.playerData.currentDistance += incrementDistance;
+        game.playerData.currentScore += incrementDistance * 2;
+        timer %= 10;
+      }
     }
     super.update(dt);
   }

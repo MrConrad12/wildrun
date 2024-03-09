@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wildrun/widgets/review_score.dart';
 
 import '/widgets/hud.dart';
 import '/game/wildrun.dart';
@@ -42,15 +43,32 @@ class PauseMenu extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(10),
-                      child: Selector<PlayerData, int>(
-                        selector: (_, playerData) => playerData.currentScore,
-                        builder: (_, score, __) {
-                          return Text(
-                            'Score: $score',
-                            style: const TextStyle(
-                                fontSize: 40, color: Colors.white),
-                          );
-                        },
+                      child: Column(
+                        children: [
+                          Selector<PlayerData, int>(
+                            selector: (_, playerData) =>
+                                playerData.currentScore,
+                            builder: (_, score, __) {
+                              return Text(
+                                'Score: $score',
+                                style: const TextStyle(
+                                    fontSize: 30, color: Colors.white),
+                              );
+                            },
+                          ),
+                          Selector<PlayerData, int>(
+                            selector: (_, playerData) =>
+                                playerData.currentDistance,
+                            builder: (_, distance, __) {
+                              return Text(
+                                'Distance: $distance',
+                                style: const TextStyle(
+                                    fontSize: 30, color: Colors.white),
+                              );
+                            },
+                          ),
+                          const ReviewScore(),
+                        ],
                       ),
                     ),
                     ElevatedButton(

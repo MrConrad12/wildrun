@@ -119,6 +119,7 @@ class Entity extends SpriteAnimationComponent
       case TypeBlock.wolf:
       case TypeBlock.seed:
       case TypeBlock.fruit:
+      case TypeBlock.squirrel:
         if (other is Player) {
           game.playerData.currentScore += bonusScore;
           removeFromParent();
