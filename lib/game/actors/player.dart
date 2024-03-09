@@ -135,7 +135,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
         case TypeBlock.wolf:
           regeneFullAttack();
           break;
-        case TypeBlock.squirel:
+        case TypeBlock.squirrel:
           fullSeed();
           break;
         case TypeBlock.bird:
@@ -245,6 +245,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
   void fullSeed() {
     AudioManager.instance.playSfx('seed.wav');
     playerData.seed = 3;
+    playerData.nbAnimal += 1;
     _effectTimer.start();
   }
 

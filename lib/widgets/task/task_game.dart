@@ -15,21 +15,24 @@ class TaskGame extends StatefulWidget {
 }
 
 class _TaskGameState extends State<TaskGame> {
-  void checkTask(TaskInfo task) {
+  bool isDone = false;
+  @override
+  void initState() {
+    super.initState();
+    TaskInfo task = widget.taskInfo;
     final int index = task.idTask;
     final int taskFinish = widget.game.taskData.taskCompleted[task.type]!;
-    task.hasDone = (index <= taskFinish);
+    isDone = (index + 1 <= taskFinish);
   }
 
   @override
   Widget build(BuildContext context) {
     TaskInfo data = widget.taskInfo;
-    checkTask(data);
     return Container(
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: data.hasDone ? const Color.fromARGB(228, 255, 255, 255) : null,
+        color: isDone ? const Color.fromARGB(228, 255, 255, 255) : null,
         border: Border.all(
           width: 2,
           color: data.color,
@@ -52,13 +55,13 @@ class _TaskGameState extends State<TaskGame> {
         subtitle: Text(data.desc,
             style: TextStyle(
                 fontSize: 20,
-                color: data.hasDone
+                color: isDone
                     ? const Color.fromARGB(255, 107, 107, 107)
                     : const Color.fromARGB(255, 228, 226, 226))),
         trailing: IconButton(
-          icon: Icon(data.hasDone ? Icons.task_alt : Icons.access_time_rounded),
+          icon: Icon(isDone ? Icons.task_alt : Icons.access_time_rounded),
           iconSize: 40,
-          color: data.hasDone
+          color: isDone
               ? const Color.fromARGB(255, 22, 182, 62)
               : const Color.fromARGB(255, 228, 226, 226),
           onPressed: () {},

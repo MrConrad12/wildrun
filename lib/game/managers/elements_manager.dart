@@ -87,10 +87,10 @@ class ElementManager extends Component with HasGameReference<WildRun> {
                 bonusScore: 30),
           );
           break;
-        case TypeBlock.squirel:
+        case TypeBlock.squirrel:
           gameRef.world.add(
             Entity(
-                typeBlock: TypeBlock.wolf,
+                typeBlock: TypeBlock.squirrel,
                 urlImg: 'animals/squirel.png',
                 sizeElement: Vector2.all(20),
                 gridPosition: block.gridPosition,

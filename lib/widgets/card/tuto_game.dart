@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:wildrun/game/managers/card_manager.dart';
+import 'package:wildrun/models/tuto_data.dart';
 
-class CardGame extends StatelessWidget {
-  final CardInfo cardData;
-  const CardGame({super.key, required this.cardData});
+class TutoGame extends StatelessWidget {
+  final TutoInfo tutoInfo;
+  const TutoGame({super.key, required this.tutoInfo});
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -19,9 +17,9 @@ class CardGame extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: screenSize.height * .5,
+                //height: screenSize.height * .5,
                 child: Image.asset(
-                  cardData.urlImage,
+                  tutoInfo.urlImage,
                   fit: BoxFit.fitWidth,
                 ),
               ),
@@ -29,16 +27,17 @@ class CardGame extends StatelessWidget {
                 height: 4,
               ),
               Text(
-                cardData.name,
-                style: TextStyle(fontSize: screenSize.height * 0.05),
+                tutoInfo.name,
+                style: TextStyle(fontSize: screenSize.height * 0.045),
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(4),
+                  padding: const EdgeInsets.all(10),
                   child: Text(
-                    cardData.desc,
+                    tutoInfo.desc,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: screenSize.height * 0.02),
                   ),
                 ),
               ),

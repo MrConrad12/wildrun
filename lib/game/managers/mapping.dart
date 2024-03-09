@@ -13,7 +13,7 @@ enum TypeBlock {
   fruit,
   arrowTree,
   tree,
-  squirel,
+  squirrel,
 }
 
 class Block {
@@ -137,7 +137,7 @@ final segment9 = [
   Block(Vector2(2, 1), TypeBlock.fruit),
   Block(Vector2(4, 2), TypeBlock.platform),
   Block(Vector2(6, 3), TypeBlock.platform),
-  Block(Vector2(6, 3), TypeBlock.squirel),
+  Block(Vector2(6, 3), TypeBlock.squirrel),
   Block(Vector2(9, 3), TypeBlock.seed),
 ];
 
@@ -156,7 +156,7 @@ final segment11 = [
   for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
   Block(Vector2(1, 1), TypeBlock.waste),
   Block(Vector2(3, 2), TypeBlock.platform),
-  Block(Vector2(3, 2), TypeBlock.squirel),
+  Block(Vector2(3, 2), TypeBlock.squirrel),
   Block(Vector2(5, 1), TypeBlock.enemyRadioactive),
   Block(Vector2(7, 1), TypeBlock.spiked),
   Block(Vector2(8, 1), TypeBlock.spiked),
@@ -177,11 +177,10 @@ final segment13 = [
   for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
   Block(Vector2(1, 1), TypeBlock.spiked),
   Block(Vector2(1, 2), TypeBlock.fruit),
-  Block(Vector2(4, 1), TypeBlock.squirel),
+  Block(Vector2(4, 1), TypeBlock.squirrel),
   Block(Vector2(5, 2), TypeBlock.platform),
   Block(Vector2(6, 3), TypeBlock.bird),
   Block(Vector2(7, 1), TypeBlock.enemyRadioactive),
-  Block(Vector2(9, 3), TypeBlock.waste),
 ];
 
 final segment14 = [

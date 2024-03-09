@@ -1,20 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import '../game/managers/card_manager.dart';
+import '../models/tuto_data.dart';
 import '/game/wildrun.dart';
 import 'main_menu.dart';
-import 'card/card_game.dart';
+import 'card/tuto_game.dart';
 
-// This represents the cards menu overlay.
-class CardMenu extends StatelessWidget {
+// This represents the tutos menu overlay.
+class TutoMenu extends StatelessWidget {
   // An unique identified for this overlay.
-  static const id = 'CardMenu';
-
+  static const id = 'TutoMenu';
   // Reference to parent game.
   final WildRun game;
 
-  const CardMenu(this.game, {super.key});
+  const TutoMenu(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +69,7 @@ class _CardViewState extends State<CardView> {
             children: [
               const Expanded(
                   child: Text(
-                "Cards : 1/10",
+                "Tutorial",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -78,9 +77,11 @@ class _CardViewState extends State<CardView> {
               )),
               IconButton(
                   onPressed: () {
-                    widget.game.overlays.remove(CardMenu.id);
+                    widget.game.overlays.remove(TutoMenu.id);
                     widget.game.overlays.add(MainMenu.id);
-                    widget.game.reset();
+                    if (widget.game.actorInitialized) {
+                      widget.game.reset();
+                    }
                   },
                   icon: const Icon(Icons.cancel_outlined))
             ],
@@ -98,9 +99,9 @@ class _CardViewState extends State<CardView> {
                 ),
                 controller: _scrollController,
                 scrollDirection: Axis.horizontal,
-                itemCount: cards.length,
+                itemCount: tutos.length,
                 itemBuilder: (context, index) =>
-                    CardGame(cardData: cards[index]),
+                    TutoGame(tutoInfo: tutos[index]),
               ),
             ),
           ),

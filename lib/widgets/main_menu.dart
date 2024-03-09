@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'card_menu.dart';
+import 'tuto_menu.dart';
 import '/widgets/hud.dart';
 import '/game/wildrun.dart';
 import '/widgets/settings_menu.dart';
@@ -51,7 +51,7 @@ class MainMenu extends StatelessWidget {
                           tooltip: 'view cards',
                           onPressed: () {
                             game.overlays.remove(MainMenu.id);
-                            game.overlays.add(CardMenu.id);
+                            game.overlays.add(TutoMenu.id);
                           },
                           icon: const Icon(Icons.content_copy_outlined)),
                       IconButton(

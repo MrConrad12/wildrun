@@ -58,25 +58,21 @@ class WildRun extends FlameGame
     'landscape/tree3.png',
     'landscape/waste.png',
     'landscape/ground.png',
-    'landscape/spiked.png',
     'landscape/void.png',
+    'landscape/spiked.png',
     'landscape/platform_center.png',
-    'cards/animal1.jpg',
-    'cards/animal2.jpg',
-    'cards/bird1.jpg',
-    'cards/bird2.jpg',
-    'cards/CO2.jpg',
-    'cards/hog2.jpg',
-    'cards/hog1.jpg',
-    'cards/run2.jpg',
-    'cards/runner1.jpg',
-    'cards/runner2.jpg',
-    'cards/tree2.jpg',
-    'cards/waste1.jpg',
-    'cards/waste2.jpg',
-    'cards/wolf1.jpg',
-    'cards/wolf5.jpg',
-    'cards/wolf4.jpg',
+    'tutos/attack.png',
+    'tutos/double_jump.png',
+    'tutos/end.png',
+    'tutos/enemies.png',
+    'tutos/waste.png',
+    'tutos/fly.png',
+    'tutos/fruit.png',
+    'tutos/jump.png',
+    'tutos/plant_tree.png',
+    'tutos/play.png',
+    'tutos/squirrel.png',
+    'tutos/wolf.png',
   ];
   // Asset paths for audio files
   static const _audioAssets = [
@@ -96,7 +92,6 @@ class WildRun extends FlameGame
   late Settings settings;
   late PlayerData playerData;
   late TaskData taskData;
-  //late CardData cardData;
   late ElementManager _elementManager;
   double timer = .0;
   get elementManager => _elementManager;
@@ -168,27 +163,27 @@ class WildRun extends FlameGame
       switch (task.type) {
         case TypeTask.run:
           if (playerData.currentDistance >= task.goal) {
-            taskData.taskCompleted[TypeTask.run] = i % nbOfEachTask;
+            taskData.taskCompleted[TypeTask.run] = i % nbOfEachTask + 1;
           }
           break;
         case TypeTask.animal:
           if (playerData.nbAnimal >= task.goal) {
-            taskData.taskCompleted[TypeTask.animal] = i % nbOfEachTask;
+            taskData.taskCompleted[TypeTask.animal] = i % nbOfEachTask + 1;
           }
           break;
         case TypeTask.enemy:
           if (playerData.nbAnimal >= task.goal) {
-            taskData.taskCompleted[TypeTask.enemy] = i % nbOfEachTask;
+            taskData.taskCompleted[TypeTask.enemy] = i % nbOfEachTask + 1;
           }
           break;
         case TypeTask.tree:
           if (playerData.nbTree >= task.goal) {
-            taskData.taskCompleted[TypeTask.tree] = i % nbOfEachTask;
+            taskData.taskCompleted[TypeTask.tree] = i % nbOfEachTask + 1;
           }
           break;
         case TypeTask.waste:
           if (playerData.nbWaste >= task.goal) {
-            taskData.taskCompleted[TypeTask.waste] = i % nbOfEachTask;
+            taskData.taskCompleted[TypeTask.waste] = i % nbOfEachTask + 1;
           }
           break;
         default:
@@ -305,23 +300,6 @@ class WildRun extends FlameGame
     }
     return settingsBox.get('WildRun.Settings')!;
   }
-
-/*
-  // Method to read card data from local storage
-  Future<CardData> _readCardData() async {
-    final cardDataBox = await Hive.openBox<CardData>('WildRun.CardDataBox');
-    final cardData = cardDataBox.get('WildRun.CardData');
-
-    if (cardDataBox == null) {
-      await cardDataBox.put(
-        'WildRun.CardData',
-        CardData(),
-      );
-    }
-    return cardDataBox.get('WildRun.CardData')!;
-  }
-*/
-  // Method to read player data from local storage
 
   // Method to handle lifecycle state changes of the application
   @override
