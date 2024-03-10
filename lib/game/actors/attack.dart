@@ -43,7 +43,6 @@ class GlowingBall extends SpriteAnimationComponent
     position.x += dt * ballSpeed;
 
     if (position.x > startPositionX + _distanceBall) {
-      //game.sizeScreen.width
       removeFromParent();
     }
   }
@@ -54,7 +53,6 @@ class GlowingBall extends SpriteAnimationComponent
         (other.typeBlock == TypeBlock.enemyCO2 ||
             other.typeBlock == TypeBlock.enemyRadioactive)) {
       removeFromParent();
-      //add audio effect
     }
     super.onCollision(intersectionPoints, other);
   }

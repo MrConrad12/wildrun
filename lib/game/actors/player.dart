@@ -205,6 +205,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
 
   void attack() {
     if (playerData.attack > 0) {
+      // AudioManager.instance.playSfx('attack.wav');
       game.world.add(GlowingBall());
     }
     _effectTimer.start();
@@ -227,7 +228,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
       speedY = 0;
       hasJumped = true;
       playerData.nbAnimal += 1;
-      //AudioManager.instance.playSfx(''); //song for flying
+      AudioManager.instance.playSfx('bird.wav');
       current = PlayerAnimationStates.fly;
       _flyTimer.start();
     }
@@ -235,7 +236,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerAnimationStates>
 
   void heal() {
     if (!isHeal) {
-      AudioManager.instance.playSfx('seed.wav'); //song for healing
+      AudioManager.instance.playSfx('seed.wav');
       isHeal = true;
       playerData.lives += 1;
       _effectTimer.start();

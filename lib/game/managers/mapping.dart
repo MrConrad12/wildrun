@@ -39,6 +39,8 @@ final segments = [
   segment13,
   segment14,
   segment15,
+  segment16,
+  segment17,
 ];
 final segment0 = [
   for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
@@ -203,4 +205,32 @@ final segment15 = [
   Block(Vector2(6, 1), TypeBlock.arrowTree),
   Block(Vector2(8, 2), TypeBlock.platform),
   Block(Vector2(9, 2), TypeBlock.fruit),
+];
+
+final segment16 = [
+  for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
+  Block(Vector2(2, 1), TypeBlock.spiked),
+  Block(Vector2(3, 1), TypeBlock.spiked),
+  Block(Vector2(3, 2), TypeBlock.platform),
+  Block(Vector2(4, 1), TypeBlock.spiked),
+  Block(Vector2(5, 1), TypeBlock.spiked),
+  Block(Vector2(5, 2), TypeBlock.platform),
+  Block(Vector2(5, 2), TypeBlock.waste),
+  Block(Vector2(6, 1), TypeBlock.spiked),
+  Block(Vector2(7, 1), TypeBlock.spiked),
+  Block(Vector2(7, 2), TypeBlock.platform),
+  Block(Vector2(8, 1), TypeBlock.spiked),
+];
+final segment17 = [
+  for (double i = 0; i <= 9; i++) Block(Vector2(i, 0), TypeBlock.ground),
+  Block(Vector2(2, 2), TypeBlock.platform),
+  Block(Vector2(3, 2), TypeBlock.platform),
+  Block(Vector2(3, 1), TypeBlock.enemyRadioactive),
+  Block(Vector2(4, 2), TypeBlock.platform),
+  Block(Vector2(6, 3), TypeBlock.platform),
+  Block(Vector2(7, 4), TypeBlock.bird),
+  Block(Vector2(9, 4), TypeBlock.fruit),
+  Block(Vector2(7, 1), TypeBlock.arrowTree),
+  Block(Vector2(8, 1), TypeBlock.spiked),
+  Block(Vector2(9, 1), TypeBlock.spiked),
 ];

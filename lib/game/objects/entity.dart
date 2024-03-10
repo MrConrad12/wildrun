@@ -4,6 +4,7 @@ import 'package:wildrun/game/actors/attack.dart';
 import 'package:wildrun/game/managers/mapping.dart';
 import 'package:flame/effects.dart';
 import '../actors/player.dart';
+import '../managers/audio_manager.dart';
 import '../wildrun.dart';
 import 'tree.dart';
 
@@ -106,6 +107,8 @@ class Entity extends SpriteAnimationComponent
       case TypeBlock.enemyRadioactive:
         if (other is GlowingBall) {
           live -= 1;
+          AudioManager.instance.playSfx('enemy_hit.wav');
+
           if (live == 0) {
             add(RemoveEffect());
             game.playerData.nbEnemy += 1;

@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:wildrun/game/objects/tree.dart';
 
 import '../objects/entity.dart';
 import '../objects/decoration.dart';
@@ -195,6 +196,8 @@ class ElementManager extends Component with HasGameReference<WildRun> {
     List allElements = [
       ...gameRef.world.children.whereType<Entity>(),
       ...gameRef.world.children.whereType<Decoration>(),
+      ...gameRef.world.children.whereType<GroundBlock>(),
+      ...gameRef.world.children.whereType<Tree>(),
     ];
     for (var element in allElements) {
       element.removeFromParent();

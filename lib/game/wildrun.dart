@@ -12,7 +12,6 @@ import 'package:flame/components.dart';
 import 'package:wildrun/game/managers/task_manager.dart';
 import 'package:wildrun/models/task_data.dart';
 
-//import '../models/card_data.dart';
 import 'actors/player.dart';
 import '/widgets/hud.dart';
 import '/models/settings.dart';
@@ -76,15 +75,18 @@ class WildRun extends FlameGame
   ];
   // Asset paths for audio files
   static const _audioAssets = [
-    '8BitPlatformerLoop.wav',
     'hurt7.wav',
     'jump14.wav',
     'animal.wav',
     'gameBgm.wav',
-    'homeBgm',
+    'homeBgm.wav',
     'seed.wav',
     'Selection.wav',
     'waste.wav',
+    'attack.wav',
+    'enemy_hit.wav',
+    'bird.wav',
+    'attack2.wav',
   ];
 
   double objectSpeed = 110;
@@ -265,7 +267,6 @@ class WildRun extends FlameGame
     return KeyEventResult.handled;
   }
 
-  // Method to read player data from local storage
   Future<PlayerData> _readPlayerData() async {
     final playerDataBox =
         await Hive.openBox<PlayerData>('WildRun.PlayerDataBox');

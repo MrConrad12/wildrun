@@ -68,7 +68,7 @@ List<TutoInfo> tutos = [
     urlImage: 'images/tutos/wolf.png',
   ),
   TutoInfo(
-    name: "The enemies - Smogs and Slimes",
+    name: "The enemies - Smogs and Blubles",
     desc:
         "Fighting pollution: Tap the left side to dissipate smogs and purify slimes.",
     urlImage: 'images/tutos/enemies.png',
