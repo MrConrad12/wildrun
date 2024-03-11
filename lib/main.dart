@@ -109,5 +109,3 @@ class WildRunApp extends StatelessWidget {
     );
   }
 }
-
-class Carousel {}
