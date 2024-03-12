@@ -34,12 +34,9 @@ Future<void> initHive() async {
   if (!kIsWeb) {
     // Get the directory for application documents
     final dir = await getApplicationDocumentsDirectory();
-    // Initialize Hive with the obtained directory path
     Hive.init(dir.path);
   }
-  // Register the adapter for the PlayerData model class
   Hive.registerAdapter<PlayerData>(PlayerDataAdapter());
-  // Register the adapter for the Settings model class
   Hive.registerAdapter<Settings>(SettingsAdapter());
   Hive.registerAdapter<TaskData>(TaskDataAdapter());
 }
@@ -76,7 +73,6 @@ class WildRunApp extends StatelessWidget {
       home: Scaffold(
         // GameWidget to handle the game lifecycle
         body: GameWidget<WildRun>.controlled(
-          // Builder for showing loading indicator during game initialization
           loadingBuilder: (context) => const Center(
             child: SizedBox(
               width: 200,
